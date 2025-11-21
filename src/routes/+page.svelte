@@ -1,2 +1,13 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
+<script>
+	import BannerSlider from '$lib/components/BannerSlider.svelte';
+    import CategoryShowcase from '$lib/components/CategoryShowcase.svelte';
+    import TrustSection from '$lib/components/TrustSection.svelte';
+    import LocationTabs from '$lib/components/LocationTabs.svelte';
+</script>
+
+<div class="mt-6">
+	<BannerSlider />
+    <CategoryShowcase />
+    <TrustSection />
+    <LocationTabs />
+</div>
