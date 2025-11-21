@@ -26,7 +26,7 @@
 							<span>0965.060.363</span>
 						</div>
 						<div class="flex items-center gap-2">
-							<Mail class="size-4 text-[#0E3A6B] fill-current" />
+							<Mail class="size-4 text-[#0E3A6B]" />
 							<span>info@toanphat.com</span>
 						</div>
 					</div>
