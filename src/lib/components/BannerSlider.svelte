@@ -1,21 +1,16 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { ChevronLeft, ChevronRight } from '@lucide/svelte';
-
-	// 1. NEW RELIABLE IMAGE LINKS (Agriculture Theme)
-	const images = [
-		{ 
-			// Tractor/Combine Harvester in field
+const images = [
+		{
 			src: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1200&auto=format&fit=crop", 
 			alt: "Agricultural Machine Harvesting" 
 		},
-		{ 
-			// Asian Farmer inspecting crops (often more stable link)
+		{
 			src: "https://images.unsplash.com/photo-1605000797499-95a51c5269ae?q=80&w=1200&auto=format&fit=crop", 
 			alt: "Farmer in rice field" 
 		},
-		{ 
-			// Wheat/Grain texture
+		{
 			src: "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?q=80&w=1200&auto=format&fit=crop", 
 			alt: "Wheat and Bran close up" 
 		}
