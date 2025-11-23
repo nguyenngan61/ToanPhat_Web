@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { Menu, Portal } from '@skeletonlabs/skeleton-svelte';
 	import { ChevronDown } from '@lucide/svelte';
+	import { goto } from '$app/navigation';
 
-	// 1. DATA FROM PICTURE 2 (Welding & Machinery)
 	const productCategories = [
 		{ 
 			type: "Máy Băm Chuối", 
@@ -45,33 +45,65 @@
 			value: "thiet-bi-say-hap"
 		}
 	];
+
+	function handleCategoryClick(categoryName: string) {
+		goto(`/search?q=${encodeURIComponent(categoryName)}`);
+	}
+
+	// NEW: Handle the Trigger Click Logic
+	function handleTriggerClick(event: MouseEvent) {
+		// event.detail counts the number of consecutive clicks (1, 2, 3...)
+		if (event.detail === 3) {
+			// Triple Click detected!
+			event.preventDefault(); // Stop the menu from toggling again
+			event.stopPropagation();
+			
+			// Go to the main products page
+			goto('/products');
+			
+			// Scroll to top just in case
+			window.scrollTo({ top: 0, behavior: 'smooth' });
+		}
+		// If detail is 1 or 2, we let Skeleton handle the Open/Close automatically.
+	}
 </script>
 
 <Menu>
-	<Menu.Trigger class="flex items-center gap-1 hover:text-[#00AEEF] transition-colors font-normal text-base">
+	<Menu.Trigger 
+		onclick={handleTriggerClick}
+		class="flex items-center gap-1 hover:text-[#00AEEF] transition-colors font-normal text-base cursor-pointer outline-none focus:outline-none focus:ring-0 border-none bg-transparent p-0 select-none"
+	>
 		<span>Sản Phẩm</span>
 		<ChevronDown class="size-4 opacity-50" />
 	</Menu.Trigger>
 
 	<Portal>
-		
 		<Menu.Positioner style="z-index: 99999;">
 			
-			<Menu.Content class="bg-white border border-gray-200 shadow-2xl rounded-md p-4 w-[1000px] max-w-[95vw] mt-2">
+			<Menu.Content class="bg-white border border-gray-200 shadow-2xl rounded-md mt-4 w-[1000px] max-w-[95vw] p-6">
 				
-				<div class="grid grid-cols-4 gap-4">
+				<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"> 
 					{#each productCategories as cat}
-						<Menu.Item value={cat.value} class="border border-gray-200 rounded-lg p-4 hover:border-[#00AEEF] hover:bg-blue-50/30 transition-all h-full cursor-pointer flex flex-col gap-2 items-start text-left outline-none">
-							
-							<Menu.ItemText class="font-bold text-[#0e3a6b] text-lg leading-tight uppercase">
+						
+						<Menu.Item 
+							value={cat.value} 
+							onclick={() => handleCategoryClick(cat.type)}
+							class="
+								border border-gray-200 rounded-lg p-4 h-full 
+								hover:border-[#00AEEF] hover:shadow-md transition-all 
+								cursor-pointer flex flex-col gap-2 items-start text-left outline-none
+								bg-white
+							"
+						>
+							<Menu.ItemText class="font-bold text-[#0e3a6b] text-sm uppercase leading-tight">
 								{cat.type}
 							</Menu.ItemText>
 							
-							<div class="text-xs text-gray-500 leading-relaxed line-clamp-3">
+							<div class="text-xs text-gray-500 leading-relaxed">
 								{cat.list}
 							</div>
-
 						</Menu.Item>
+
 					{/each}
 				</div>
 

@@ -1,77 +1,58 @@
 <script lang="ts">
 	import { LayoutGrid, ShoppingBasket, Star } from '@lucide/svelte';
+    import { page } from '$app/stores';
 
-	interface FilterState {
-		sort: string;
-		priceRange: string;
-		type: string;
-	}
+	let { filters } = $props();
 
-	let { filters }: { filters: FilterState } = $props();
-
+	// 1. DATA
 	const allProducts = [
-		{
-			id: 1,
-			name: "Máy băm chuối 2 chức năng",
-			price: 1780000,
-			img: "/assets/may-bam-chuoi.png",
-			rating: 5,
-			category: "Máy Băm Chuối",
-            type: "machine"
-		},
-		{
-			id: 2,
-			name: "Máy băm chuối đa năng 3kw Toàn Phát",
-			price: 450000,
-			img: "/assets/may-bam-co.png", 
-			rating: 5,
-			category: "Máy Băm Chuối",
-            type: "machine"
-		},
-		{
-			id: 3,
-			name: "Máy băm cỏ xay nghiền đa năng",
-			price: 1250000,
-			img: "/assets/may-chan-nuoi.png",
-			rating: 4,
-			category: "Máy Băm Cỏ",
-            type: "machine"
-		},
-        {
-			id: 4,
-			name: "Máy thái chuối mịn",
-			price: 990000,
-			img: "/assets/may-che-bien-thuc-pham.png",
-			rating: 5,
-			category: "Máy Chế Biến Thực Phẩm",
-            type: "machine"
-		},
-        {
-			id: 31,
-			name: "Máy băm cỏ voi công suất lớn",
-			price: 3250000,
-			img: "/assets/may-nong-nghiep.png",
-			rating: 5,
-			category: "Máy Băm Cỏ",
-            type: "machine"
-		}
+		{ id: 1, name: "Máy băm chuối 2 chức năng", price: 1780000, img: "/assets/may-bam-chuoi.png", rating: 5, category: "Máy Băm Chuối", type: "machine" },
+		{ id: 2, name: "Máy băm chuối đa năng 3kw Toàn Phát", price: 450000, img: "/assets/may-bam-co.png", rating: 5, category: "Máy Băm Chuối", type: "machine" },
+		{ id: 3, name: "Máy băm cỏ xay nghiền đa năng", price: 1250000, img: "/assets/may-chan-nuoi.png", rating: 4, category: "Máy Băm Cỏ", type: "machine" },
+        { id: 4, name: "Máy thái chuối mịn", price: 990000, img: "/assets/may-che-bien-thuc-pham.png", rating: 5, category: "Máy Chế Biến Thực Phẩm", type: "machine" },
+        { id: 31, name: "Máy băm cỏ voi công suất lớn", price: 3250000, img: "/assets/may-nong-nghiep.png", rating: 5, category: "Máy Băm Cỏ", type: "machine" }
 	];
 
+	// 2. TABS (Must match CategoryShowcase titles exactly)
 	const tabs = [
-		"Tất Cả", "Máy Băm Chuối", "Máy Băm Cỏ", "Máy Chăn Nuôi", 
-		"Máy Chế Biến Thực Phẩm", "Máy Ép Cám Viên", 
-		"Máy Nông Nghiệp", "Máy & Công Nghệ Khác", "Thiết Bị Sấp Hấp"
+		"Tất Cả", 
+        "Máy Băm Chuối", 
+        "Máy Băm Cỏ", 
+        "Máy Chăn Nuôi", 
+		"Máy Chế Biến Thực Phẩm", 
+        "Máy Ép Cám Viên", 
+		"Máy Nông Nghiệp", 
+        "Máy & Công Nghệ Khác", // Fixed to match Showcase
+        "Thiết Bị Sấy Hấp"      // Fixed spelling
 	];
 
 	let activeTab = $state("Tất Cả");
 
+    // 3. LISTEN TO URL CHANGES
+    // Reacts specifically to changes in $page.url.searchParams
+    $effect(() => {
+        const tabParam = $page.url.searchParams.get('tab');
+        if (tabParam) {
+            // Decode URL encoded string just in case, though .get() usually handles it
+            const decodedTab = decodeURIComponent(tabParam);
+            
+            // Only update if it's a valid tab
+            if (tabs.includes(decodedTab) || decodedTab === "Tất Cả") {
+                activeTab = decodedTab;
+            }
+        }
+    });
+
+    // 4. FILTER LOGIC
     let displayProducts = $derived.by(() => {
         let result = [...allProducts];
 
+        // Filter by Tab
         if (activeTab !== "Tất Cả") {
             result = result.filter(p => p.category === activeTab);
         }
 
+        // Filter by Sidebar
         if (filters.type !== "all") {
             result = result.filter(p => p.type === filters.type);
         }
@@ -102,7 +83,7 @@
     };
 </script>
 
-<div class="flex-1 flex flex-col gap-8 w-full">
+<div id="shop-section" class="flex-1 flex flex-col gap-8 w-full scroll-mt-24">
 	
 	<div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
 		
@@ -161,16 +142,16 @@
 
             {#if displayProducts.length === 0}
                 <div class="col-span-full py-20 text-center text-gray-400 italic bg-gray-50 rounded-lg border border-dashed border-gray-200">
-                    <p>Không tìm thấy sản phẩm phù hợp.</p>
-                    <button onclick={() => { activeTab = "Tất Cả"; filters.priceRange = "all"; filters.sort = "default"; }} class="text-[#0E3A6B] underline mt-2 hover:text-blue-500">
-                        Xóa bộ lọc
+                    <p>Không tìm thấy sản phẩm phù hợp cho danh mục: <span class="font-bold text-[#0E3A6B]">{activeTab}</span></p>
+                    <button onclick={() => { activeTab = "Tất Cả"; }} class="text-[#0E3A6B] underline mt-2 hover:text-blue-500">
+                        Xem Tất Cả
                     </button>
                 </div>
             {/if}
 		</div>
 	</div>
 
-	<div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100 min-h-[200px] flex flex-col">
+    <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100 min-h-[200px] flex flex-col">
 		<div class="flex items-center gap-3 mb-6">
 			<LayoutGrid class="size-8 text-blue-500 fill-blue-500" />
 			<h2 class="text-xl font-bold text-black uppercase">PHỤ KIỆN</h2>

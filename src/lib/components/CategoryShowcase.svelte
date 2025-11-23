@@ -5,7 +5,6 @@ const categories = [
 		{ 
 			title: "Máy Băm Chuối", 
 			desc: "Hai chức năng, đa năng 3kW, thái chuối mịn",
-			// Path starts with '/' which equals the 'static' folder
 			img: "/assets/may-bam-chuoi.png"  
 		},
 		{ 
@@ -34,7 +33,7 @@ const categories = [
 			img: "/assets/may-nong-nghiep.png" 
 		},
 		{ 
-			title: "Máy & CN Khác", 
+			title: "Máy & Công Nghệ Khác", 
 			desc: "Air shower, máy bóc lạc, máy băm gỗ",
 			img: "/assets/may-cn-khac.png" 
 		},
@@ -51,7 +50,7 @@ const categories = [
 	<div class="w-[75%] mx-auto flex justify-between items-center mb-8">
 		<h2 class="text-2xl font-bold text-[#0E3A6B] uppercase">Danh Mục Sản Phẩm</h2>
 		
-		<a href="/products" class="group flex items-center gap-1 text-sm font-semibold text-gray-600 hover:text-[#00AEEF] transition-colors border px-4 py-1 rounded shadow-sm hover:shadow-md bg-gray-50">
+		<a href="/products?tab=Tất Cả#shop-section" class="group flex items-center gap-1 text-sm font-semibold text-gray-600 hover:text-[#00AEEF] transition-colors border px-4 py-1 rounded shadow-sm hover:shadow-md bg-gray-50">
 			Xem Tất Cả
 			<ChevronRight class="size-4 group-hover:translate-x-1 transition-transform" />
 		</a>
@@ -60,7 +59,7 @@ const categories = [
 	<div class="flex justify-center gap-1 flex-wrap px-4">
 		{#each categories as cat}
 			
-			<a href="/products" class="block w-[140px] h-[250px] bg-white rounded-md border border-gray-200 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 ease-out cursor-pointer group overflow-hidden relative">
+			<a href={`/products?tab=${cat.title}#shop-section`} class="block w-[140px] h-[250px] bg-white rounded-md border border-gray-200 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 ease-out cursor-pointer group overflow-hidden relative">
 				
 				<div class="h-[130px] w-full overflow-hidden p-2">
 					<img 
