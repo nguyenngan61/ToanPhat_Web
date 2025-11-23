@@ -93,70 +93,51 @@
 		{:else}
 			<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
 				{#each paginatedList as product (product.id)}
-					
-					<div class="bg-white border border-gray-200 hover:border-[#0E3A6B] rounded-xl p-4 shadow-sm hover:shadow-2xl transition-all duration-300 relative group flex flex-col h-[300px]">
-						
+					<a 
+						href={product.name.includes("Máy băm chuối") ? "/products/may-bam-chuoi-da-nang-3kw" : "#"}
+						class="bg-white rounded-lg p-3 flex flex-col justify-between relative shadow-md group cursor-pointer hover:-translate-y-1 transition-transform text-left h-320px"
+					>
+						<div class="absolute top-0 left-0 bg-linear-to-b from-[#ffdd00] to-[#FF4500] text-white text-xs font-bold px-2 py-1 rounded-tl-lg rounded-br-lg z-10 shadow-sm">
+							-{product.discount}%
+						</div>
+
 						<button 
-							onclick={() => toggleHeart(product.id)}
-							class="absolute top-3 left-3 z-10 transition-all duration-200
-							{product.isSelected 
-								? 'text-[#0E3A6B] fill-[#0E3A6B]' 
-								: 'text-gray-300 hover:text-[#0E3A6B]'
-							}"
+							onclick={(e) => { e.preventDefault(); toggleHeart(product.id); }}
+							class="absolute top-2 right-2 z-20 transition-all duration-200 {product.isSelected ? 'text-[#0E3A6B] fill-[#0E3A6B]' : 'text-gray-300 hover:text-[#0E3A6B]'}"
 						>
 							<Heart class="size-5" fill={product.isSelected ? "#0E3A6B" : "none"} />
 						</button>
 
-						<div class="h-[140px] w-full flex items-center justify-center overflow-hidden mb-3">
-							<img src={product.img} alt={product.name} class="h-full w-full object-contain group-hover:scale-105 transition-transform" />
+						<div class="h-[140px] w-full flex items-center justify-center overflow-hidden mt-2">
+							<img src={product.img} alt={product.name} class="h-full object-contain group-hover:scale-105 transition-transform" />
 						</div>
 
-						<div class="flex flex-col flex-1 justify-between">
-							
-                            <div>
-                                <h3 class="text-xs font-bold text-gray-800 line-clamp-2 mb-1 h-32px leading-tight">
-                                    {product.name}
-                                </h3>
+						<div class="flex flex-col gap-1">
+							<h3 class="text-sm font-bold text-gray-800 line-clamp-2 h-10 leading-tight">
+								{product.name}
+							</h3>
 
-                                <div class="flex gap-0.5 mb-2">
-                                    {#each Array(5) as _, i}
-                                        {@render starIcon(i, product.rating)}
-                                    {/each}
-                                </div>
+							<div class="flex flex-row items-baseline gap-2">
+								<span class="text-red-600 font-bold text-lg">{formatPrice(product.price)}</span>
+								<span class="text-gray-400 text-xs line-through">{formatPrice(product.oldPrice)}</span>
+							</div>
 
-                                <div class="flex items-center gap-2 text-[10px] mb-1">
-                                    <span class="text-gray-400 line-through">{formatPrice(product.oldPrice)}</span>
-                                    <span class="bg-linear-to-r from-[#ff9a44] to-[#fc6076] text-white px-2 py-0.5 rounded-md font-bold shadow-sm">
-                                        -{product.discount}%
-                                    </span>
-                                </div>
-
-                                <div class="text-[#FF8C00] font-extrabold text-lg">
-                                    {formatPrice(product.price)}
-                                </div>
-                            </div>
-
-							<div class="flex items-end justify-between gap-2 mt-2">
-								
-                                <div class="flex-1 flex flex-col gap-1 pb-0.5">
-									<span class="text-[9px] text-gray-500 font-semibold">Đã bán: {product.sold}</span>
-									<div class="w-full bg-gray-100 h-1.5 rounded-full overflow-hidden">
-                                        <div 
-                                            class="bg-linear-to-r from-[#ff9a44] to-[#fc6076] h-full rounded-full" 
-                                            style="width: {(product.sold / 10) * 100}%"
-                                        ></div>
+							<div class="flex items-end gap-2 mt-2">
+								<div class="flex-1 flex flex-col gap-1">
+									<span class="text-[10px] font-bold text-gray-500">Đã bán: {product.sold}</span>
+									<div class="w-full bg-red-100 rounded-full h-2 relative overflow-hidden border border-red-200">
+										<div 
+											class="bg-red-600 h-full rounded-full" 
+											style="width: {(product.sold / 10) * 100}%"
+										></div>
 									</div>
 								</div>
-
-								<button class="bg-linear-to-r from-[#0E3A6B] to-[#1a528f] text-white text-[10px] font-bold px-3 py-1.5 rounded-md hover:brightness-110 transition-all flex items-center gap-1.5 shadow-md shrink-0">
-                                    <ShoppingCart class="size-3.5" />
-									Mua
+								<button class="shrink-0 p-1.5 rounded-full border border-red-600 text-red-600 hover:bg-red-600 hover:text-white transition-colors">
+									<ShoppingCart class="size-4" />
 								</button>
-
 							</div>
 						</div>
-
-					</div>
+					</a>
 				{/each}
 			</div>
 		{/if}

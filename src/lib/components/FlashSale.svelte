@@ -85,8 +85,11 @@
 
     <div class="flex gap-4">
         
-        {#each flashSaleProducts.slice(0, 4) as product}
-            <div class="w-[220px] flex-none h-320px bg-white rounded-lg p-3 flex flex-col justify-between relative shadow-md group cursor-pointer hover:-translate-y-1 transition-transform">
+       {#each flashSaleProducts.slice(0, 4) as product}
+            <a 
+                href={product.name.includes("Máy băm chuối") ? "/products/may-bam-chuoi-da-nang-3kw" : "#"}
+                class="w-[220px] flex-none h-320px bg-white rounded-lg p-3 flex flex-col justify-between relative shadow-md group cursor-pointer hover:-translate-y-1 transition-transform text-left"
+            >
                 
                 <div class="absolute top-0 left-0 bg-linear-to-b from-[#ffdd00] to-[#FF4500] text-white text-xs font-bold px-2 py-1 rounded-tl-lg rounded-br-lg z-10 shadow-sm">
                     -{product.discount}%
@@ -121,7 +124,7 @@
                         </button>
                     </div>
                 </div>
-            </div>
+            </a>
         {/each}
 
         <a href="/flash-sale" class="self-center flex flex-col items-center gap-1 ml-4 group text-[#FBFF1F] hover:scale-110 transition-transform shrink-0">
