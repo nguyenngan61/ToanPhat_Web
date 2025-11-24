@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { Zap, ShoppingCart, ArrowRight } from '@lucide/svelte';
+    import { cart } from '$lib/stores/cart.svelte';
 
 	const flashSaleProducts = [
 		{
@@ -119,7 +120,10 @@
                                 ></div>
                             </div>
                         </div>
-                        <button class="shrink-0 p-1.5 rounded-full border border-red-600 text-red-600 hover:bg-red-600 hover:text-white transition-colors">
+                        <button 
+                            onclick={(e) => { e.preventDefault(); e.stopPropagation(); cart.add({ name: product.name, price: product.price }, 1); }}
+                            class="p-1.5 rounded-full border border-red-600 text-red-600 hover:bg-red-600 hover:text-white transition-colors"
+                        >
                             <ShoppingCart class="size-4" />
                         </button>
                     </div>

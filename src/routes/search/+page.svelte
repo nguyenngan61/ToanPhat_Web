@@ -2,6 +2,7 @@
 	import { page } from '$app/stores';
 	import ProductFilter from '$lib/components/ProductFilter.svelte';
 	import { Home, ShoppingBasket, Star, ChevronLeft, ChevronRight, ShoppingCart } from '@lucide/svelte';
+	import { cart } from '$lib/stores/cart.svelte';
 
 	// 1. MASTER DATA (In a real app, this comes from a database/API)
     // I am using a large list to demonstrate pagination and search
@@ -134,9 +135,12 @@
                                         <div class="bg-red-600 h-full rounded-full" style="width: 20%"></div>
                                     </div>
                                 </div>
-                                <button class="shrink-0 p-1.5 rounded-full border border-red-600 text-red-600 hover:bg-red-600 hover:text-white transition-colors">
-                                    <ShoppingCart class="size-4" />
-                                </button>
+                                <button 
+									onclick={(e) => { e.preventDefault(); e.stopPropagation(); cart.add(p, 1); }}
+									class="size-8 rounded-full border border-red-100 bg-red-50 text-red-500 flex items-center justify-center hover:bg-red-500 hover:text-white transition-colors"
+								>
+									<ShoppingBasket class="size-4" />
+								</button>
                             </div>
                         </div>
                     </a>

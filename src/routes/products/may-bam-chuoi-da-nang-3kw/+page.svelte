@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { House, Star, Minus, Plus, ShoppingBag, ShoppingCart, Phone, Link as LinkIcon, Facebook, Twitter, Linkedin, Mail, Search, X, ChevronLeft, ChevronRight, RefreshCw, ShieldCheck, Truck } from '@lucide/svelte';
-
+    import { cart } from '$lib/stores/cart.svelte';
+    import { goto } from '$app/navigation';
+    import { checkout } from '$lib/stores/checkout.svelte';
 	// 1. Product Data
 	const mainImg = "/assets/may-bam-chuoi.png";
 	const product = {
@@ -47,19 +49,31 @@
 	function decreaseQty() { if (quantity > 1) quantity--; }
 	function increaseQty() { quantity++; }
 
-	// NEW: Add to Cart Function
-	function addToCart() {
+    function handleAddToCart() {
+		cart.add(product, quantity);
 		showCartPopup = true;
 	}
+
+	const formatPrice = (price: number) => {
+		return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
+	};
 
 	function copyLink() {
 		navigator.clipboard.writeText(window.location.href);
 		alert("Đã sao chép liên kết!");
 	}
 
-	const formatPrice = (price: number) => {
-		return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
-	};
+    function handleBuyNow() {
+        // Create a temporary item object
+        const itemToBuy = {
+            ...product,
+            quantity: quantity,
+            images: [mainImg] // Ensure image format matches cart structure
+        };
+        
+        checkout.setItems([itemToBuy]); // Save single item
+        goto('/checkout'); // Go directly to checkout
+    }
 </script>
 
 <div class="min-h-screen bg-gray-50 py-6 relative">
@@ -131,14 +145,14 @@
 
 				<div class="flex items-center gap-4 mb-10">
 					<button 
-						onclick={addToCart}
+						onclick={handleAddToCart}
 						class="border-2 border-[#0E3A6B] text-[#0E3A6B] bg-white p-3 rounded-lg hover:bg-blue-50 transition-all flex items-center justify-center shadow-sm" 
 						title="Thêm vào giỏ hàng"
 					>
 						<ShoppingBag class="size-7" />
 					</button>
 
-					<button class="flex-1 bg-[linear-gradient(to_right,#0E3A6B,#1a528f)] text-white text-lg font-bold py-3 rounded-lg hover:brightness-110 transition-all shadow-md flex items-center justify-center gap-2">
+					<button onclick={handleBuyNow} class="flex-1 bg-linear-to-b from-[#0E3A6B] to-[#00AEEF] text-white text-lg font-bold py-3 rounded-lg hover:brightness-110 transition-all shadow-md flex items-center justify-center gap-2">
 						<span>MUA NGAY</span>
 						<ShoppingCart class="size-6" />
 					</button>
@@ -168,46 +182,43 @@
 		<!-- svelte-ignore a11y_interactive_supports_focus -->
 		<!-- svelte-ignore a11y_click_events_have_key_events -->
 		<div 
-			class="fixed inset-0 z-9999 bg-black/50 flex items-center justify-center p-4"
+			class="fixed inset-0 z-9999 bg-black/40 flex items-start justify-center pt-20 p-4 backdrop-blur-[1px]"
 			onclick={() => showCartPopup = false}
-			role="dialog"
-			aria-modal="true"
+            role="dialog"
+            aria-modal="true"
 		>
 			<!-- svelte-ignore a11y_no_static_element_interactions -->
 			<div 
-				class="bg-white w-full max-w-md rounded-lg shadow-2xl overflow-hidden"
+				class="bg-white w-full max-w-[500px] rounded-lg shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200 flex flex-col max-h-[80vh]"
 				onclick={(e) => e.stopPropagation()} 
 			>
-				<div class="p-4 border-b border-gray-200 flex items-center justify-center gap-2">
+				<div class="p-4 border-b border-gray-200 flex items-center justify-center gap-2 shrink-0">
 					<ShoppingBag class="size-5 text-gray-600" />
-					<h2 class="text-lg font-bold uppercase text-gray-700">GIỎ HÀNG</h2>
+					<h2 class="text-lg font-bold uppercase text-gray-700 tracking-wide">GIỎ HÀNG ({cart.count})</h2>
 				</div>
 
-				<div class="p-4 flex items-start justify-between gap-4">
-					<div class="flex flex-col gap-1">
-						<h3 class="text-sm font-bold text-[#0E3A6B] leading-tight line-clamp-2">
-							{product.name}
-						</h3>
-						<p class="text-sm text-gray-500">
-							{quantity} x <span class="font-regular text-gray-600">{formatPrice(product.price)}</span>
-						</p>
-					</div>
-					<div class="w-16 h-16 border border-gray-200 rounded-md overflow-hidden shrink-0">
-						<img src={mainImg} alt="Mini thumbnail" class="w-full h-full object-contain" />
-					</div>
+                <div class="overflow-y-auto p-0">
+					{#each cart.items as item}
+						<div class="p-4 flex items-start justify-between gap-4 border-b border-gray-100 last:border-0">
+							<div class="flex flex-col gap-1">
+								<h3 class="text-[14px] font-bold text-[#0E3A6B] leading-snug">{item.name}</h3>
+								<p class="text-sm text-gray-500 mt-1">
+                                    {item.quantity} x <span class="font-semibold text-gray-700">{formatPrice(item.price)}</span>
+                                </p>
+							</div>
+							<div class="w-16 h-16 border border-gray-200 rounded-md overflow-hidden shrink-0 bg-white p-1">
+                                <img src={item.images ? item.images[0] : mainImg} alt="Thumbnail" class="w-full h-full object-contain" />
+                            </div>
+						</div>
+					{/each}
 				</div>
 
-				<div class="bg-gray-100 p-4 flex flex-col gap-4">
-					<div class="flex justify-between items-center text-sm">
-						<span class="font-semibold text-gray-600">Tạm tính:</span>
-						<span class="font-bold text-gray-600 text-lg">{formatPrice(product.price * quantity)}</span>
-					</div>
-					<button 
-						onclick={() => showCartPopup = false} 
-						class="w-full bg-[#0E3A6B] text-white font-bold py-3 rounded-md hover:brightness-110 transition-all"
-					>
-						Giỏ Hàng
-					</button>
+				<div class="bg-[#F8F9FA] p-5 flex flex-col gap-4 border-t border-gray-200 shrink-0">
+					<div class="flex justify-between items-center">
+                        <span class="text-gray-600 font-medium">Tạm tính ({cart.count} món):</span>
+                        <span class="font-bold text-[#0E3A6B] text-xl">{formatPrice(cart.totalMoney)}</span>
+                    </div>
+					<button onclick={() => goto('/cart')} class="w-full bg-[#0E3A6B] text-white font-bold py-3 rounded-md hover:brightness-110 transition-all shadow-sm uppercase tracking-wide">Giỏ Hàng</button>
 				</div>
 			</div>
 		</div>

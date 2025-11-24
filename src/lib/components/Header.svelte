@@ -3,6 +3,7 @@
 	import { Phone, Mail, ShoppingCart, ChevronDown } from '@lucide/svelte';
 	import SearchBox from '$lib/components/SearchBox.svelte';
     import ProductMenu from '$lib/components/ProductMenu.svelte';
+	import { cart } from '$lib/stores/cart.svelte';
 </script>
 
 <AppBar class="bg-white border-b border-gray-200 shadow-sm">
@@ -11,7 +12,7 @@
 			
 			<AppBar.Lead>
 				<a href="/">
-					<img src="assets/logocokhitoanphat.png" alt="Logo" class="h-20 w-auto object-contain" />
+					<img src="/assets/logocokhitoanphat.png" alt="Logo" class="h-20 w-auto object-contain" />
 				</a>
 			</AppBar.Lead>
 
@@ -40,9 +41,16 @@
 
 						<a href="/news" class="hover:text-[#00AEEF] transition-colors">Tin Tức</a>
 						<a href="/policy" class="hover:text-[#00AEEF] transition-colors">Chính Sách</a>
-					<button class="text-[#0E3A6B] hover:opacity-80 transition-opacity">
-						<ShoppingCart class="size-7 fill-current" />
-					</button>
+						<a href="/cart" class="text-[#0E3A6B] hover:opacity-80 transition-opacity relative inline-block">
+    
+							{#if cart.count > 0}
+								<span class="absolute -top-2 -right-2 z-10 flex h-5 w-5 items-center justify-center rounded-full bg-red-600 text-[10px] font-bold text-white shadow-sm">
+									{cart.count}
+								</span>
+							{/if}
+
+							<ShoppingCart class="size-7 fill-current" />
+						</a>
                     </nav>
 				</div>
 

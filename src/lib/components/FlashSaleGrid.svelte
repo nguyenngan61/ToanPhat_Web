@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { Heart, ChevronRight, ChevronLeft, ShoppingCart, Star } from '@lucide/svelte';
+	import { cart } from '$lib/stores/cart.svelte';
 
 	// 1. DATA
 	const baseProducts = [
@@ -31,7 +32,13 @@
 
 	function toggleHeart(id: number) {
 		const product = allProducts.find(p => p.id === id);
-		if (product) product.isSelected = !product.isSelected;
+		if (product) {
+            product.isSelected = !product.isSelected;
+
+            if (product.isSelected) {
+                cart.add(product, 1);
+            }
+        }
 	}
 
     // SCROLL LOGIC (Left & Right)
@@ -101,12 +108,26 @@
 							-{product.discount}%
 						</div>
 
+
 						<button 
-							onclick={(e) => { e.preventDefault(); toggleHeart(product.id); }}
-							class="absolute top-2 right-2 z-20 transition-all duration-200 {product.isSelected ? 'text-[#0E3A6B] fill-[#0E3A6B]' : 'text-gray-300 hover:text-[#0E3A6B]'}"
-						>
-							<Heart class="size-5" fill={product.isSelected ? "#0E3A6B" : "none"} />
-						</button>
+						onclick={(e) => { 
+							e.preventDefault();
+							e.stopPropagation(); 
+							toggleHeart(product.id);
+							if (!product.isSelected) cart.add(product, 1); // Add to cart when selecting heart
+						}}
+						class="absolute top-2 right-2 z-20 transition-all duration-200 {product.isSelected ? 'text-[#0E3A6B] fill-[#0E3A6B]' : 'text-gray-300 hover:text-[#0E3A6B]'}"
+					>
+						<Heart class="size-5" fill={product.isSelected ? "#0E3A6B" : "none"} />
+					</button>
+
+					<button 
+						onclick={(e) => { e.preventDefault(); e.stopPropagation(); cart.add(product, 1); }}
+						class="bg-[#0E3A6B] text-white text-[10px] font-bold px-3 py-1.5 rounded hover:brightness-110 transition-all flex items-center gap-1.5 shadow-md shrink-0"
+					>
+						<ShoppingCart class="size-3.5" />
+						Mua
+					</button>
 
 						<div class="h-[140px] w-full flex items-center justify-center overflow-hidden mt-2">
 							<img src={product.img} alt={product.name} class="h-full object-contain group-hover:scale-105 transition-transform" />
