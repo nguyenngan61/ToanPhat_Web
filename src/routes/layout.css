@@ -4,4 +4,6 @@
 @import '@skeletonlabs/skeleton-svelte';
 @import '@skeletonlabs/skeleton/themes/cerberus';
 
-@import '../Light';
+@font-face {
+    src: url('/fonts/light.css'); 
+}
