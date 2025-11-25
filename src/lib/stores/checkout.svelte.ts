@@ -1,18 +1,23 @@
 import { browser } from '$app/environment';
 
 class CheckoutStore {
+	// 1. Items (Products)
 	items = $state<any[]>([]);
 
-	// NEW: Customer Info State
+	// 2. Info (Customer Details)
+	// We initialize with empty strings so the Success page doesn't error out
 	info = $state({
 		name: '',
 		phone: '',
 		city: '',
 		district: '',
 		ward: '',
-		address: '', // Specific street address/note
+		address: '',
+		note: '',
 		paymentMethod: 'cod',
-		shippingFee: 35000
+		shippingFee: 35000,
+		discountPercent: 0,
+		couponCode: ''
 	});
 
 	constructor() {
@@ -22,8 +27,7 @@ class CheckoutStore {
 				try {
 					const data = JSON.parse(stored);
 					this.items = data.items || [];
-					// Load info if exists
-					if (data.info) this.info = data.info;
+					if (data.info) this.info = { ...this.info, ...data.info }; // Merge saved data
 				} catch (e) {
 					console.error(e);
 				}
@@ -31,7 +35,6 @@ class CheckoutStore {
 		}
 	}
 
-	// Save Items AND Info
 	save() {
 		if (browser) {
 			localStorage.setItem(
@@ -49,7 +52,6 @@ class CheckoutStore {
 		this.save();
 	}
 
-	// Update Info
 	updateInfo(newInfo: any) {
 		this.info = { ...this.info, ...newInfo };
 		this.save();

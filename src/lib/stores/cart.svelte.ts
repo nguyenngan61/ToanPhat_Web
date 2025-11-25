@@ -3,26 +3,24 @@ import { browser } from '$app/environment';
 class CartStore {
 	items = $state<any[]>([]);
 
-	// Derived values
+	// Derived values (Badge updates automatically when items change)
 	count = $derived(this.items.length);
 	totalQuantity = $derived(this.items.reduce((sum, item) => sum + item.quantity, 0));
 	totalMoney = $derived(this.items.reduce((sum, item) => sum + item.price * item.quantity, 0));
 
 	constructor() {
-		// 1. LOAD FROM LOCAL STORAGE ON START
 		if (browser) {
 			const stored = localStorage.getItem('toanphat_cart');
 			if (stored) {
 				try {
 					this.items = JSON.parse(stored);
 				} catch (e) {
-					console.error('Error loading cart', e);
+					console.error(e);
 				}
 			}
 		}
 	}
 
-	// 2. SAVE HELPER
 	save() {
 		if (browser) {
 			localStorage.setItem('toanphat_cart', JSON.stringify(this.items));
@@ -30,17 +28,13 @@ class CartStore {
 	}
 
 	add(product: any, quantity: number) {
-		this.items.push({
-			...product,
-			quantity,
-			id: Date.now() + Math.random()
-		});
-		this.save(); // Save after adding
+		this.items.push({ ...product, quantity, id: Date.now() + Math.random() });
+		this.save();
 	}
 
 	remove(id: number) {
 		this.items = this.items.filter((item) => item.id !== id);
-		this.save(); // Save after removing
+		this.save();
 	}
 
 	updateQuantity(id: number, change: number) {
@@ -49,9 +43,15 @@ class CartStore {
 			const newQty = item.quantity + change;
 			if (newQty > 0) {
 				item.quantity = newQty;
-				this.save(); // Save after update
+				this.save();
 			}
 		}
+	}
+
+	removePurchasedItems(purchasedItems: any[]) {
+		const purchasedIds = purchasedItems.map((p) => p.id);
+		this.items = this.items.filter((item) => !purchasedIds.includes(item.id));
+		this.save();
 	}
 }
 

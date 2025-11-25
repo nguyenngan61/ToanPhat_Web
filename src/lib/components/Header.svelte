@@ -34,13 +34,14 @@
 				</div>
 
 				<div class="flex justify-between items-center border-t border-gray-100 pt-3 relative z-0">
-					<nav class="flex items-center gap-32 text-black font-normal text-base">
+					<nav class="flex items-center gap-25 text-black font-normal text-base">
 						<a href="/" class="hover:text-[#00AEEF] transition-colors">Trang Chủ</a>
 						
                         <ProductMenu />
 
 						<a href="/news" class="hover:text-[#00AEEF] transition-colors">Tin Tức</a>
 						<a href="/policy" class="hover:text-[#00AEEF] transition-colors">Chính Sách</a>
+						<a href="/contact" class="hover:text-[#00AEEF] transition-colors">Liên Hệ</a>
 						<a href="/cart" class="text-[#0E3A6B] hover:opacity-80 transition-opacity relative inline-block">
     
 							{#if cart.count > 0}
