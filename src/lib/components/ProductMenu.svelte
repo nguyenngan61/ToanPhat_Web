@@ -64,11 +64,11 @@
 			// Scroll to top just in case
 			window.scrollTo({ top: 0, behavior: 'smooth' });
 		}
-		// If detail is 1 or 2, we let Skeleton handle the Open/Close automatically.
 	}
 </script>
 
-<Menu>
+<Menu positioning={{ placement: 'bottom' }}>
+	
 	<Menu.Trigger 
 		onclick={handleTriggerClick}
 		class="flex items-center gap-1 hover:text-[#00AEEF] transition-colors font-normal text-base cursor-pointer outline-none focus:outline-none focus:ring-0 border-none bg-transparent p-0 select-none"
@@ -84,7 +84,6 @@
 				
 				<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"> 
 					{#each productCategories as cat}
-						
 						<Menu.Item 
 							value={cat.value} 
 							onclick={() => handleCategoryClick(cat.type)}
@@ -98,12 +97,10 @@
 							<Menu.ItemText class="font-bold text-[#0e3a6b] text-sm uppercase leading-tight">
 								{cat.type}
 							</Menu.ItemText>
-							
 							<div class="text-xs text-gray-500 leading-relaxed">
 								{cat.list}
 							</div>
 						</Menu.Item>
-
 					{/each}
 				</div>
 

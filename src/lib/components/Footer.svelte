@@ -84,7 +84,7 @@
 					<a href="/" class="hover:text-[#00AEEF]">Trang Chủ</a>
 					<a href="/products" class="hover:text-[#00AEEF]">Sản Phẩm</a>
 					<a href="/news" class="hover:text-[#00AEEF]">Tin Tức</a>
-					<a href="/warranty" class="hover:text-[#00AEEF]">Bảo Hành</a>
+					<a href="/policy" class="hover:text-[#00AEEF]">Chính Sách</a>
 					<a href="/contact" class="hover:text-[#00AEEF]">Liên Hệ Với Chúng Tôi</a>
 				</nav>
 			</div>
