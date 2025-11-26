@@ -97,19 +97,19 @@
                 <div class="relative">
                     <!-- svelte-ignore a11y_label_has_associated_control -->
                     <label class="text-xs text-gray-500 ml-3 bg-white px-1 absolute -top-2 left-0 z-10">Họ và tên <span class="text-red-500">*</span></label>
-                    <input type="text" bind:value={name} class="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:border-[#0E3A6B] bg-transparent relative z-0" placeholder="" />
+                    <input type="text" bind:value={name} class="w-full text-gray-700 border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:border-[#0E3A6B] bg-transparent relative z-0" placeholder="" />
                 </div>
                 <div class="relative flex">
                     <!-- svelte-ignore a11y_label_has_associated_control -->
                     <label class="text-xs text-gray-500 ml-3 bg-white px-1 absolute -top-2 left-0 z-10">Số điện thoại <span class="text-red-500">*</span></label>
                     <div class="w-16 border border-gray-300 border-r-0 rounded-l-md flex items-center justify-center bg-gray-50"><img src="https://flagcdn.com/w20/vn.png" alt="VN" class="w-5" /></div>
-                    <input type="text" bind:value={phone} class="w-full border border-gray-300 rounded-r-md px-4 py-3 focus:outline-none focus:border-[#0E3A6B] relative z-0" placeholder="" />
+                    <input type="text" bind:value={phone} class="w-full border text-gray-700 border-gray-300 rounded-r-md px-4 py-3 focus:outline-none focus:border-[#0E3A6B] relative z-0" placeholder="" />
                 </div>
                 <div class="relative">
                     <!-- svelte-ignore a11y_label_has_associated_control -->
                     <label class="text-xs text-gray-500 ml-3 bg-white px-1 absolute -top-2 left-0 z-10">Tỉnh thành <span class="text-red-500">*</span></label>
                     <div class="relative">
-                        <select bind:value={selectedCity} onchange={handleCityChange} class="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:border-[#0E3A6B] bg-white appearance-none relative z-0"><option value="" disabled selected>Chọn Tỉnh/Thành</option>{#each Object.keys(locationData) as city}<option value={city}>{city}</option>{/each}</select>
+                        <select bind:value={selectedCity} onchange={handleCityChange} class="w-full border text-gray-700 border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:border-[#0E3A6B] bg-white appearance-none relative z-0"><option value="" disabled selected>Chọn Tỉnh/Thành</option>{#each Object.keys(locationData) as city}<option value={city}>{city}</option>{/each}</select>
                         <ChevronDown class="absolute right-4 top-1/2 -translate-y-1/2 size-4 text-gray-400 pointer-events-none z-10" />
                     </div>
                 </div>
@@ -117,7 +117,7 @@
                     <!-- svelte-ignore a11y_label_has_associated_control -->
                     <label class="text-xs text-gray-500 ml-3 bg-white px-1 absolute -top-2 left-0 z-10">Quận huyện <span class="text-red-500">*</span></label>
                     <div class="relative">
-                        <select bind:value={selectedDistrict} onchange={handleDistrictChange} disabled={!selectedCity} class="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:border-[#0E3A6B] bg-white appearance-none disabled:bg-gray-100 relative z-0"><option value="" disabled selected>Chọn Quận/Huyện</option>{#each districts as dist}<option value={dist}>{dist}</option>{/each}</select>
+                        <select bind:value={selectedDistrict} onchange={handleDistrictChange} disabled={!selectedCity} class="w-full border text-gray-700 border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:border-[#0E3A6B] bg-white appearance-none disabled:bg-gray-100 relative z-0"><option value="" disabled selected>Chọn Quận/Huyện</option>{#each districts as dist}<option value={dist}>{dist}</option>{/each}</select>
                         <ChevronDown class="absolute right-4 top-1/2 -translate-y-1/2 size-4 text-gray-400 pointer-events-none z-10" />
                     </div>
                 </div>
@@ -125,14 +125,14 @@
                     <!-- svelte-ignore a11y_label_has_associated_control -->
                     <label class="text-xs text-gray-500 ml-3 bg-white px-1 absolute -top-2 left-0 z-10">Phường xã <span class="text-red-500">*</span></label>
                     <div class="relative">
-                        <select bind:value={selectedWard} disabled={!selectedDistrict} class="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:border-[#0E3A6B] bg-white appearance-none disabled:bg-gray-100 relative z-0"><option value="" disabled selected>Chọn Phường/Xã</option>{#each wards as ward}<option value={ward}>{ward}</option>{/each}</select>
+                        <select bind:value={selectedWard} disabled={!selectedDistrict} class="w-full border text-gray-700 border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:border-[#0E3A6B] bg-white appearance-none disabled:bg-gray-100 relative z-0"><option value="" disabled selected>Chọn Phường/Xã</option>{#each wards as ward}<option value={ward}>{ward}</option>{/each}</select>
                         <ChevronDown class="absolute right-4 top-1/2 -translate-y-1/2 size-4 text-gray-400 pointer-events-none z-10" />
                     </div>
                 </div>
                 <div class="relative">
                     <!-- svelte-ignore a11y_label_has_associated_control -->
                     <label class="text-xs text-gray-500 ml-3 bg-white px-1 absolute -top-2 left-0 z-10">Ghi chú (Tùy chọn)</label>
-                    <textarea bind:value={note} class="w-full border border-gray-300 rounded-md px-4 py-3 h-24 resize-none focus:outline-none focus:border-[#0E3A6B] relative z-0"></textarea>
+                    <textarea bind:value={note} class="w-full border text-gray-700 border-gray-300 rounded-md px-4 py-3 h-24 resize-none focus:outline-none focus:border-[#0E3A6B] relative z-0"></textarea>
                 </div>
             </div>
         </div>
@@ -176,19 +176,51 @@
                     {/each}
                 </div>
                 <div class="py-4 border-b border-gray-200 relative z-50">
-                    <div class="relative" onclick={(e) => e.stopPropagation()}>
-                        <div class="flex gap-2"><input type="text" bind:value={couponCode} placeholder="Chọn hoặc nhập mã giảm giá" readonly onclick={() => showCouponList = !showCouponList} class="flex-1 border border-gray-300 rounded px-3 py-2 text-sm focus:border-[#0E3A6B] focus:outline-none cursor-pointer bg-white" /><button onclick={() => showCouponList = !showCouponList} class="bg-gray-100 text-gray-600 border border-gray-300 rounded px-3 hover:bg-gray-200"><ChevronDown class="size-4" /></button></div>
-                        {#if showCouponList}
-                            <div class="absolute top-full left-0 w-full mt-1 bg-white border border-gray-200 rounded-md shadow-xl z-50 max-h-[300px] overflow-y-auto">
-                                {#each coupons as c}
-                                    <div onclick={() => selectCoupon(c)} class="p-3 border-b border-gray-100 hover:bg-blue-50 cursor-pointer flex justify-between items-start group">
-                                        <div class="flex flex-col gap-1"><div class="flex items-center gap-2"><span class="font-bold text-[#0E3A6B]">{c.code}</span>{#if c.isBest}<span class="bg-yellow-400 text-[8px] text-black px-1 rounded font-bold">BEST CHOICE</span>{/if}</div><span class="text-xs font-bold text-gray-700">{c.label}</span><span class="text-[10px] text-gray-500">{c.condition}</span></div><div class="text-xs font-bold text-green-600 group-hover:underline">Áp dụng</div>
-                                    </div>
-                                {/each}
-                            </div>
-                        {/if}
+                <div class="relative" onclick={(e) => e.stopPropagation()}>
+                    
+                    <div class="flex gap-2">
+                        <input 
+                            type="text" 
+                            bind:value={couponCode} 
+                            placeholder="Chọn mã giảm giá" 
+                            readonly
+                            onclick={() => showCouponList = !showCouponList}
+                            class="flex-1 border border-gray-300 rounded px-3 py-2 text-sm focus:border-[#0E3A6B] focus:outline-none cursor-pointer bg-white text-[#0E3A6B] font-bold placeholder:font-normal placeholder:text-gray-400"
+                        />
+                        
+                        <button 
+                            onclick={() => showCouponList = !showCouponList}
+                            class="bg-[#0E3A6B] text-white border border-[#0E3A6B] rounded px-3 hover:brightness-110 transition-colors"
+                        >
+                            <ChevronDown class="size-4" />
+                        </button>
                     </div>
+
+                    {#if showCouponList}
+                        <div class="absolute top-full left-0 w-full mt-1 bg-white border border-gray-200 rounded-md shadow-xl z-50 max-h-[300px] overflow-y-auto">
+                            {#each coupons as c}
+                                <div 
+                                    onclick={() => selectCoupon(c)}
+                                    class="p-3 border-b border-gray-100 hover:bg-blue-50 cursor-pointer flex justify-between items-start group"
+                                >
+                                    <div class="flex flex-col gap-1">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-bold text-[#0E3A6B]">{c.code}</span>
+                                            {#if c.isBest}
+                                                <span class="bg-yellow-400 text-[8px] text-black px-1 rounded font-bold">BEST CHOICE</span>
+                                            {/if}
+                                        </div>
+                                        <span class="text-xs font-bold text-gray-700">{c.label}</span>
+                                        <span class="text-[10px] text-gray-500">{c.condition}</span>
+                                    </div>
+                                    <div class="text-xs font-bold text-green-600 group-hover:underline">Áp dụng</div>
+                                </div>
+                            {/each}
+                        </div>
+                    {/if}
+                    
                 </div>
+            </div>
                 <div class="py-4 border-b border-gray-200 flex flex-col gap-2 text-sm text-gray-600 relative z-0">
                     <div class="flex justify-between"><span>Tạm tính</span><span>{formatPrice(subTotal)}</span></div>
                     <div class="flex justify-between"><span>Phí vận chuyển</span><span>{formatPrice(shippingFee)}</span></div>
