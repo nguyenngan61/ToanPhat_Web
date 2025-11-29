@@ -135,12 +135,12 @@
                                         <div class="bg-red-600 h-full rounded-full" style="width: 20%"></div>
                                     </div>
                                 </div>
-                                <button 
+                                <!-- <button 
 									onclick={(e) => { e.preventDefault(); e.stopPropagation(); cart.add(p, 1); }}
 									class="size-8 rounded-full border border-red-100 bg-red-50 text-red-500 flex items-center justify-center hover:bg-red-500 hover:text-white transition-colors"
 								>
 									<ShoppingBasket class="size-4" />
-								</button>
+								</button> -->
                             </div>
                         </div>
                     </a>

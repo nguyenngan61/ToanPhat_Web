@@ -120,12 +120,12 @@
                                 ></div>
                             </div>
                         </div>
-                        <button 
+                        <!-- <button 
                             onclick={(e) => { e.preventDefault(); e.stopPropagation(); cart.add({ name: product.name, price: product.price }, 1); }}
                             class="p-1.5 rounded-full border border-red-600 text-red-600 hover:bg-red-600 hover:text-white transition-colors"
                         >
                             <ShoppingCart class="size-4" />
-                        </button>
+                        </button> -->
                     </div>
                 </div>
             </a>

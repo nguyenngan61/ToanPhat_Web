@@ -1,19 +1,10 @@
 <script lang="ts">
-	import { LayoutGrid, ShoppingBasket, Star, ShoppingCart } from '@lucide/svelte';
-    import { page } from '$app/stores';
-	import { cart } from '$lib/stores/cart.svelte';
-	let { filters } = $props();
+	import { LayoutGrid, ShoppingBasket, Star, Phone, Ban } from '@lucide/svelte';
+    import { cart } from '$lib/stores/cart.svelte';
 
-	// 1. DATA
-	const allProducts = [
-		{ id: 1, name: "Máy băm chuối 2 chức năng", price: 1780000, img: "/assets/may-bam-chuoi.png", rating: 5, category: "Máy Băm Chuối", type: "machine" },
-		{ id: 2, name: "Máy băm chuối đa năng 3kw Toàn Phát", price: 450000, img: "/assets/may-bam-co.png", rating: 5, category: "Máy Băm Chuối", type: "machine" },
-		{ id: 3, name: "Máy băm cỏ xay nghiền đa năng", price: 1250000, img: "/assets/may-chan-nuoi.png", rating: 4, category: "Máy Băm Cỏ", type: "machine" },
-        { id: 4, name: "Máy thái chuối mịn", price: 990000, img: "/assets/may-che-bien-thuc-pham.png", rating: 5, category: "Máy Chế Biến Thực Phẩm", type: "machine" },
-        { id: 31, name: "Máy băm cỏ voi công suất lớn", price: 3250000, img: "/assets/may-nong-nghiep.png", rating: 5, category: "Máy Băm Cỏ", type: "machine" }
-	];
+    // 1. Accept Props
+	let { filters, selectedCategory = "Tất Cả" } = $props();
 
-	// 2. TABS (Must match CategoryShowcase titles exactly)
 	const tabs = [
 		"Tất Cả", 
         "Máy Băm Chuối", 
@@ -22,26 +13,106 @@
 		"Máy Chế Biến Thực Phẩm", 
         "Máy Ép Cám Viên", 
 		"Máy Nông Nghiệp", 
-        "Máy & Công Nghệ Khác", // Fixed to match Showcase
-        "Thiết Bị Sấy Hấp"      // Fixed spelling
+        "Máy & Công Nghệ Khác", 
+        "Thiết Bị Sấy Hấp"
 	];
 
-	let activeTab = $state("Tất Cả");
+   let activeTab = $state("Tất Cả");
 
-    // 3. LISTEN TO URL CHANGES
-    // Reacts specifically to changes in $page.url.searchParams
+    // === FIX: ROBUST SYNC LOGIC ===
+    // This ensures activeTab updates whenever the URL param changes
     $effect(() => {
-        const tabParam = $page.url.searchParams.get('tab');
-        if (tabParam) {
-            // Decode URL encoded string just in case, though .get() usually handles it
-            const decodedTab = decodeURIComponent(tabParam);
+        if (selectedCategory) {
+            // 1. Decode the URL parameter (e.g. "M%C3%A1y..." -> "Máy...")
+            const decoded = decodeURIComponent(selectedCategory);
             
-            // Only update if it's a valid tab
-            if (tabs.includes(decodedTab) || decodedTab === "Tất Cả") {
-                activeTab = decodedTab;
+            // 2. Check if it matches a valid tab
+            if (tabs.includes(decoded)) {
+                activeTab = decoded;
+            } else if (decoded === "Tất Cả") {
+                activeTab = "Tất Cả";
+            } else {
+                // If no match found (e.g. slight spelling diff), log it and default to All
+                console.log("Tab mismatch:", decoded); 
+                activeTab = "Tất Cả";
             }
         }
     });
+
+	const allProducts = [
+		{
+			id: 1,
+			name: "Máy băm chuối đa năng 3kw",
+			price: 600000, oldPrice: 1000000, discount: 40, sold: 4,
+			img: "/assets/may-bam-chuoi.png",
+			rating: 5,
+			category: "Máy Băm Chuối", // Must match Tab EXACTLY
+            type: "machine"
+		},
+		{
+			id: 2,
+			name: "Máy băm cỏ, xay nghiền đa năng",
+			price: 700000, oldPrice: 1000000, discount: 30, sold: 2,
+			img: "/assets/may-bam-co.png", 
+			rating: 5,
+			category: "Máy Băm Cỏ",
+            type: "machine"
+		},
+		{
+			id: 3,
+			name: "Máy trộn thức ăn chăn nuôi 50kg",
+			price: 800000, oldPrice: 1000000, discount: 20, sold: 0,
+			img: "/assets/may-chan-nuoi.png",
+			rating: 4,
+			category: "Máy Chăn Nuôi",
+            type: "machine"
+		},
+        {
+			id: 4,
+			name: "Máy Rang Đa Năng 15 kg",
+			price: 700000, oldPrice: 1000000, discount: 30, sold: 5,
+			img: "/assets/may-che-bien-thuc-pham.png",
+			rating: 5,
+			category: "Máy Chế Biến Thực Phẩm",
+            type: "machine"
+		},
+        {
+			id: 5,
+			name: "Máy Ép Cám Viên S150",
+			price: 2500000,
+			img: "/assets/may-ep-cam-vien.png",
+			rating: 5,
+			category: "Máy Ép Cám Viên",
+            type: "machine"
+		},
+        {
+			id: 31,
+			name: "Máy băm cỏ voi công suất lớn",
+			price: 3250000,
+			img: "/assets/may-nong-nghiep.png",
+			rating: 5,
+			category: "Máy Băm Cỏ",
+            type: "machine"
+		},
+        {
+            id: 101,
+            name: "Máy sấy hoa quả đa năng MS10",
+            price: 0, isContactPrice: true,
+            img: "/assets/may-say-ms10.png",
+            rating: 4,
+            category: "Thiết Bị Sấy Hấp",
+            type: "machine"
+        },
+        {
+            id: 102,
+            name: "Máy nghiền bột mịn inox",
+            price: 0, isContactPrice: true, isOutOfStock: true,
+            img: "/assets/may-nghien-bot-inox.png",
+            rating: 5,
+            category: "Máy Chế Biến Thực Phẩm",
+            type: "machine"
+        }
+	];
 
     // 4. FILTER LOGIC
     let displayProducts = $derived.by(() => {
@@ -52,13 +123,16 @@
             result = result.filter(p => p.category === activeTab);
         }
 
-        // Filter by Sidebar
+        // Filter by Sidebar Type
         if (filters.type !== "all") {
             result = result.filter(p => p.type === filters.type);
         }
 
+        // Filter by Price
         if (filters.priceRange !== "all") {
-            switch (filters.priceRange) {
+             // Exclude contact price items from range filters
+             result = result.filter(p => !p.isContactPrice);
+             switch (filters.priceRange) {
                 case "under_500": result = result.filter(p => p.price < 500000); break;
                 case "500_1000": result = result.filter(p => p.price >= 500000 && p.price <= 1000000); break;
                 case "1000_2000": result = result.filter(p => p.price >= 1000000 && p.price <= 2000000); break;
@@ -68,11 +142,12 @@
             }
         }
 
+        // Sort
         if (filters.sort !== "default") {
             if (filters.sort === "name_asc") result.sort((a, b) => a.name.localeCompare(b.name));
             if (filters.sort === "name_desc") result.sort((a, b) => b.name.localeCompare(a.name));
-            if (filters.sort === "price_asc") result.sort((a, b) => a.price - b.price);
-            if (filters.sort === "price_desc") result.sort((a, b) => b.price - a.price);
+            if (filters.sort === "price_asc") result = result.filter(p => !p.isContactPrice).sort((a, b) => a.price - b.price);
+            if (filters.sort === "price_desc") result = result.filter(p => !p.isContactPrice).sort((a, b) => b.price - a.price);
         }
 
         return result;
@@ -81,6 +156,12 @@
     const formatPrice = (price: number) => {
         return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
     };
+
+    const getProductUrl = (p: any) => {
+        if (p.id === 101) return "/products/may-say-ms10";
+        if (p.id === 102) return "/products/may-nghien-bot-inox";
+        return p.name.includes("Máy băm chuối") ? "/products/may-bam-chuoi-da-nang-3kw" : "#";
+    }
 </script>
 
 <div id="shop-section" class="flex-1 flex flex-col gap-8 w-full scroll-mt-24">
@@ -110,45 +191,63 @@
 		<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
             {#each displayProducts as p (p.id)}
 				<a 
-					href={p.name.includes("Máy băm chuối") ? "/products/may-bam-chuoi-da-nang-3kw" : "#"}
-					class="bg-white rounded-lg p-3 flex flex-col justify-between relative shadow-md group cursor-pointer hover:-translate-y-1 transition-transform text-left h-320px"
-				>
-					<div class="absolute top-0 left-0 bg-linear-to-b from-[#ffdd00] to-[#FF4500] text-white text-xs font-bold px-2 py-1 rounded-tl-lg rounded-br-lg z-10 shadow-sm">
-						-10%
+                    href={getProductUrl(p)}
+                    class="bg-white border border-gray-300 rounded-lg p-3 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group cursor-pointer flex flex-col h-[380px] text-left relative {p.isOutOfStock ? 'opacity-70' : ''}"
+                >
+                    
+                    {#if p.isOutOfStock}
+                        <div class="absolute inset-0 z-20 flex items-center justify-center pointer-events-none">
+                            <span class="bg-gray-800/90 text-white font-bold text-xl px-6 py-3 rounded-lg uppercase shadow-lg backdrop-blur-sm flex items-center gap-2">
+                                <Ban class="size-6" /> Hết hàng
+                            </span>
+                        </div>
+                    {/if}
+
+                    {#if !p.isContactPrice && p.discount && p.discount > 0}
+                        <div class="absolute top-0 left-0 bg-linear-to-b from-[#ffdd00] to-[#FF4500] text-white text-xs font-bold px-2 py-1 rounded-tl-lg rounded-br-lg z-10 shadow-sm">
+                            -{p.discount}%
+                        </div>
+                    {/if}
+
+					<div class="h-[200px] w-full overflow-hidden rounded-md mb-3 bg-gray-50 border border-gray-100 flex items-center justify-center">
+						<img src={p.img} alt={p.name} class="h-full w-full object-contain group-hover:scale-105 transition-transform duration-500" />
 					</div>
 
-					<div class="h-[140px] w-full flex items-center justify-center overflow-hidden mt-2">
-						<img src={p.img} alt={p.name} class="h-full object-contain group-hover:scale-105 transition-transform" />
-					</div>
+					<div class="flex flex-col grow justify-between">
+                        <div>
+                            <h3 class="text-sm font-bold text-gray-800 line-clamp-2 h-[42px] mb-1 leading-tight">{p.name}</h3>
+                            <div class="flex gap-0.5 mb-1 mt-1">
+                                {#each Array(5) as _, i}<Star class="size-3 {i < p.rating ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300 fill-gray-300'}" />{/each}
+                            </div>
+                            <div class="flex flex-row items-baseline gap-2">
+                                {#if p.isContactPrice}
+                                    <p class="text-[#0E3A6B] font-bold text-lg flex items-center gap-1">Liên hệ</p>
+                                {:else}
+                                    <p class="text-[#0E3A6B] font-extrabold text-lg">{formatPrice(p.price)}</p>
+                                    {#if p.oldPrice}<span class="text-gray-400 text-xs line-through">{formatPrice(p.oldPrice)}</span>{/if}
+                                {/if}
+                            </div>
+                        </div>
 
-					<div class="flex flex-col gap-1">
-						<h3 class="text-sm font-bold text-gray-800 line-clamp-2 h-10 leading-tight">
-							{p.name}
-						</h3>
+						<div class="flex items-end justify-between mt-2 border-t border-gray-100 pt-2">
+                            {#if !p.isContactPrice && p.sold !== undefined}
+                                <div class="flex-1 flex flex-col gap-1 mr-2">
+                                    <span class="text-[10px] font-bold text-gray-500">Đã bán: {p.sold}</span>
+                                    <div class="w-full bg-blue-100 rounded-full h-1.5 relative overflow-hidden border border-blue-200">
+                                        <div class="bg-[#0E3A6B] h-full rounded-full" style="width: {(p.sold / 10) * 100}%"></div>
+                                    </div>
+                                </div>
+                            {:else}
+                                <div class="flex-1"></div>
+                            {/if}
 
-						<div class="flex gap-0.5">
-							{#each Array(5) as _, i}
-								<Star class="size-3 {i < p.rating ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300 fill-gray-300'}" />
-							{/each}
-						</div>
-
-						<div class="flex flex-row items-baseline gap-2">
-							<span class="text-red-600 font-bold text-lg">{formatPrice(p.price)}</span>
-						</div>
-
-						<div class="flex items-end gap-2 mt-2">
-							<div class="flex-1 flex flex-col gap-1">
-								<span class="text-[10px] font-bold text-gray-500">Đã bán: 5</span>
-								<div class="w-full bg-red-100 rounded-full h-2 relative overflow-hidden border border-red-200">
-									<div class="bg-red-600 h-full rounded-full" style="width: 50%"></div>
-								</div>
-							</div>
-							<button 
-								onclick={(e) => { e.preventDefault(); e.stopPropagation(); cart.add(p, 1); }}
-								class="size-8 rounded-full border border-red-100 bg-red-50 text-red-500 flex items-center justify-center hover:bg-red-500 hover:text-white transition-colors"
-							>
-								<ShoppingBasket class="size-4" />
-							</button>
+							<!-- <button 
+                                onclick={(e) => { e.preventDefault(); if(p.isOutOfStock) return; if(p.isContactPrice) { alert("Vui lòng gọi 0965.060.363"); } else { cart.add(p, 1); } }}
+                                class="size-8 shrink-0 rounded-full border flex items-center justify-center transition-colors {p.isOutOfStock ? 'border-gray-200 bg-gray-100 text-gray-400 cursor-not-allowed' : p.isContactPrice ? 'border-blue-100 bg-blue-50 text-blue-500 hover:bg-blue-500 hover:text-white' : 'border-red-100 bg-red-50 text-red-500 hover:bg-red-500 hover:text-white'}"
+                                disabled={p.isOutOfStock}
+                            >
+                                {#if p.isContactPrice}<Phone class="size-4" />{:else}<ShoppingBasket class="size-4" />{/if}
+							</button> -->
 						</div>
 					</div>
 				</a>
@@ -157,22 +256,15 @@
             {#if displayProducts.length === 0}
                 <div class="col-span-full py-20 text-center text-gray-400 italic bg-gray-50 rounded-lg border border-dashed border-gray-200">
                     <p>Không tìm thấy sản phẩm phù hợp cho danh mục: <span class="font-bold text-[#0E3A6B]">{activeTab}</span></p>
-                    <button onclick={() => { activeTab = "Tất Cả"; }} class="text-[#0E3A6B] underline mt-2 hover:text-blue-500">
-                        Xem Tất Cả
-                    </button>
+                    <button onclick={() => { activeTab = "Tất Cả"; }} class="text-[#0E3A6B] underline mt-2 hover:text-blue-500">Xem Tất Cả</button>
                 </div>
             {/if}
 		</div>
 	</div>
-
-    <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100 min-h-[200px] flex flex-col">
-		<div class="flex items-center gap-3 mb-6">
-			<LayoutGrid class="size-8 text-blue-500 fill-blue-500" />
-			<h2 class="text-xl font-bold text-black uppercase">PHỤ KIỆN</h2>
-		</div>
-		<div class="flex-1 flex items-center justify-center border-t border-gray-200 mt-2">
-			<p class="text-gray-400 italic text-sm underline decoration-gray-300 underline-offset-4">Sắp được lên kệ</p>
-		</div>
+    
+	<div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100 min-h-[200px] flex flex-col">
+		<div class="flex items-center gap-3 mb-6"><LayoutGrid class="size-8 text-blue-500 fill-blue-500" /><h2 class="text-xl font-bold text-black uppercase">PHỤ KIỆN</h2></div>
+		<div class="flex-1 flex items-center justify-center border-t border-gray-200 mt-2"><p class="text-gray-400 italic text-sm underline decoration-gray-300 underline-offset-4">Sắp được lên kệ</p></div>
 	</div>
 
 </div>

@@ -121,13 +121,7 @@
 						<Heart class="size-5" fill={product.isSelected ? "#0E3A6B" : "none"} />
 					</button>
 
-					<button 
-						onclick={(e) => { e.preventDefault(); e.stopPropagation(); cart.add(product, 1); }}
-						class="bg-[#0E3A6B] text-white text-[10px] font-bold px-3 py-1.5 rounded hover:brightness-110 transition-all flex items-center gap-1.5 shadow-md shrink-0"
-					>
-						<ShoppingCart class="size-3.5" />
-						Mua
-					</button>
+					
 
 						<div class="h-[140px] w-full flex items-center justify-center overflow-hidden mt-2">
 							<img src={product.img} alt={product.name} class="h-full object-contain group-hover:scale-105 transition-transform" />
@@ -153,9 +147,9 @@
 										></div>
 									</div>
 								</div>
-								<button class="shrink-0 p-1.5 rounded-full border border-red-600 text-red-600 hover:bg-red-600 hover:text-white transition-colors">
+								<!-- <button class="shrink-0 p-1.5 rounded-full border border-red-600 text-red-600 hover:bg-red-600 hover:text-white transition-colors">
 									<ShoppingCart class="size-4" />
-								</button>
+								</button> -->
 							</div>
 						</div>
 					</a>

@@ -144,13 +144,13 @@
 				</div>
 
 				<div class="flex items-center gap-4 mb-10">
-					<button 
+					<!-- <button 
 						onclick={handleAddToCart}
 						class="border-2 border-[#0E3A6B] text-[#0E3A6B] bg-white p-3 rounded-lg hover:bg-blue-50 transition-all flex items-center justify-center shadow-sm" 
 						title="Thêm vào giỏ hàng"
 					>
 						<ShoppingBag class="size-7" />
-					</button>
+					</button> -->
 
 					<button onclick={handleBuyNow} class="flex-1 bg-linear-to-b from-[#0E3A6B] to-[#00AEEF] text-white text-lg font-bold py-3 rounded-lg hover:brightness-110 transition-all shadow-md flex items-center justify-center gap-2">
 						<span>MUA NGAY</span>
@@ -159,8 +159,8 @@
 				</div>
 
 				<div class="grid grid-cols-3 gap-2 border-t border-gray-100 pt-6">
-					<div class="flex flex-col items-center text-center gap-2 text-xs text-gray-600"><RefreshCw class="size-6 text-[#00AEEF]" /><span>Đổi trả dễ dàng</span></div>
-					<div class="flex flex-col items-center text-center gap-2 text-xs text-gray-600"><ShieldCheck class="size-6 text-[#00AEEF]" /><span>Hàng chính hãng</span></div>
+					<div class="flex flex-col items-center text-center gap-2 text-xs text-gray-600"><RefreshCw class="size-6 text-[#0E3A6B]" /><span>Đổi trả dễ dàng</span></div>
+					<div class="flex flex-col items-center text-center gap-2 text-xs text-gray-600"><ShieldCheck class="size-6 text-[#0E3A6B]" /><span>Hàng chính hãng</span></div>
 					<div class="flex flex-col items-center text-center gap-2 text-xs text-gray-600"><Truck class="size-6 text-[#0E3A6B]" /><span>Miễn phí vận chuyển</span></div>
 				</div>
 			</div>

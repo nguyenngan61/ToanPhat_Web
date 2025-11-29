@@ -33,7 +33,7 @@
             <div class="bg-gray-50 rounded-xl p-5 flex flex-col items-center text-center shadow-sm border border-gray-100 h-full justify-center">
                 <div class="size-14 bg-white rounded-full flex items-center justify-center mb-3 shadow-sm"><Phone class="size-7 text-[#0E3A6B]" /></div>
                 <h3 class="font-bold text-base text-[#0E3A6B] mb-1">Điện thoại</h3>
-                <p class="text-gray-600 font-bold text-lg"><a href="tel:0965060363" class="hover:underline">0965.060.363</a></p>
+                <p class="text-gray-600 text-sm"><a href="tel:0965060363" class="hover:underline">0965.060.363</a></p>
             </div>
             <div class="bg-gray-50 rounded-xl p-5 flex flex-col items-center text-center shadow-sm border border-gray-100 h-full justify-center">
                 <div class="size-14 bg-white rounded-full flex items-center justify-center mb-3 shadow-sm"><Mail class="size-7 text-[#0E3A6B]" /></div>
@@ -63,16 +63,42 @@
                     <h2 class="text-xl font-bold text-[#0E3A6B] mb-2">Gửi tin nhắn cho chúng tôi</h2>
                     <p class="text-sm text-gray-600">Hãy bắt đầu bằng một cuộc trò chuyện với chúng tôi, mọi mong muốn của bạn sẽ được lắng nghe.</p>
                 </div>
-                <form onsubmit={handleSubmit} class="flex flex-col gap-4">
-                    <input type="text" bind:value={name} placeholder="Họ và tên" required class="w-full border border-gray-300 rounded-md px-4 py-3 text-sm focus:outline-none focus:border-[#0E3A6B] focus:ring-1 focus:ring-[#0E3A6B] transition-all" />
-                    <input type="email" bind:value={email} placeholder="Email" required class="w-full border border-gray-300 rounded-md px-4 py-3 text-sm focus:outline-none focus:border-[#0E3A6B] focus:ring-1 focus:ring-[#0E3A6B] transition-all" />
-                    <input type="tel" bind:value={phone} placeholder="Số điện thoại" required class="w-full border border-gray-300 rounded-md px-4 py-3 text-sm focus:outline-none focus:border-[#0E3A6B] focus:ring-1 focus:ring-[#0E3A6B] transition-all" />
-                    <input type="text" bind:value={subject} placeholder="Tiêu đề" required class="w-full border border-gray-300 rounded-md px-4 py-3 text-sm focus:outline-none focus:border-[#0E3A6B] focus:ring-1 focus:ring-[#0E3A6B] transition-all" />
-                    <textarea bind:value={message} placeholder="Nội dung" rows="5" required class="w-full border border-gray-300 rounded-md px-4 py-3 text-sm resize-none focus:outline-none focus:border-[#0E3A6B] focus:ring-1 focus:ring-[#0E3A6B] transition-all"></textarea>
-                    <button type="submit" class="bg-[#0E3A6B] text-white font-bold px-6 py-3 rounded-md hover:bg-[#0c2e54] transition-colors flex items-center justify-center gap-2 mt-2 group">Gửi <Send class="size-4 group-hover:translate-x-1 transition-transform" /></button>
+
+                <form onsubmit={handleSubmit} class="flex flex-col gap-5"> <div class="relative">
+                        <!-- svelte-ignore a11y_label_has_associated_control -->
+                        <label class="text-xs text-gray-500 ml-3 bg-gray-50 px-1 absolute -top-2 left-0 z-10">Họ và tên</label>
+                        <input type="text" bind:value={name} required class="w-full border border-gray-300 rounded-md px-4 py-3 text-sm focus:outline-none focus:border-[#0E3A6B] focus:ring-1 focus:ring-[#0E3A6B] bg-transparent relative z-0" />
+                    </div>
+
+                    <div class="relative">
+                        <!-- svelte-ignore a11y_label_has_associated_control -->
+                        <label class="text-xs text-gray-500 ml-3 bg-gray-50 px-1 absolute -top-2 left-0 z-10">Email</label>
+                        <input type="email" bind:value={email} required class="w-full border border-gray-300 rounded-md px-4 py-3 text-sm focus:outline-none focus:border-[#0E3A6B] focus:ring-1 focus:ring-[#0E3A6B] bg-transparent relative z-0" />
+                    </div>
+
+                    <div class="relative">
+                        <!-- svelte-ignore a11y_label_has_associated_control -->
+                        <label class="text-xs text-gray-500 ml-3 bg-gray-50 px-1 absolute -top-2 left-0 z-10">Số điện thoại</label>
+                        <input type="tel" bind:value={phone} required class="w-full border border-gray-300 rounded-md px-4 py-3 text-sm focus:outline-none focus:border-[#0E3A6B] focus:ring-1 focus:ring-[#0E3A6B] bg-transparent relative z-0" />
+                    </div>
+
+                    <div class="relative">
+                        <!-- svelte-ignore a11y_label_has_associated_control -->
+                        <label class="text-xs text-gray-500 ml-3 bg-gray-50 px-1 absolute -top-2 left-0 z-10">Tiêu đề</label>
+                        <input type="text" bind:value={subject} required class="w-full border border-gray-300 rounded-md px-4 py-3 text-sm focus:outline-none focus:border-[#0E3A6B] focus:ring-1 focus:ring-[#0E3A6B] bg-transparent relative z-0" />
+                    </div>
+
+                    <div class="relative">
+                        <!-- svelte-ignore a11y_label_has_associated_control -->
+                        <label class="text-xs text-gray-500 ml-3 bg-gray-50 px-1 absolute -top-2 left-0 z-10">Nội dung</label>
+                        <textarea bind:value={message} rows="5" required class="w-full border border-gray-300 rounded-md px-4 py-3 text-sm resize-none focus:outline-none focus:border-[#0E3A6B] focus:ring-1 focus:ring-[#0E3A6B] bg-transparent relative z-0"></textarea>
+                    </div>
+
+                    <button type="submit" class="bg-[#0E3A6B] text-white font-bold px-6 py-3 rounded-md hover:bg-[#0c2e54] transition-colors flex items-center justify-center gap-2 mt-2 group">
+                        Gửi <Send class="size-4 group-hover:translate-x-1 transition-transform" />
+                    </button>
                 </form>
             </div>
-
         </div>
     </div>
 

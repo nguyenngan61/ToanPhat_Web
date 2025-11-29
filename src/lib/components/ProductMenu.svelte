@@ -46,22 +46,19 @@
 		}
 	];
 
+    // FIX: Updated to point to Product Page Tabs instead of Search
 	function handleCategoryClick(categoryName: string) {
-		goto(`/search?q=${encodeURIComponent(categoryName)}`);
+        // 1. Navigate to /products
+        // 2. Set ?tab=... parameter
+        // 3. Add #shop-section to scroll down automatically
+		goto(`/products?tab=${encodeURIComponent(categoryName)}#shop-section`);
 	}
 
-	// NEW: Handle the Trigger Click Logic
 	function handleTriggerClick(event: MouseEvent) {
-		// event.detail counts the number of consecutive clicks (1, 2, 3...)
 		if (event.detail === 3) {
-			// Triple Click detected!
-			event.preventDefault(); // Stop the menu from toggling again
+			event.preventDefault();
 			event.stopPropagation();
-			
-			// Go to the main products page
 			goto('/products');
-			
-			// Scroll to top just in case
 			window.scrollTo({ top: 0, behavior: 'smooth' });
 		}
 	}
