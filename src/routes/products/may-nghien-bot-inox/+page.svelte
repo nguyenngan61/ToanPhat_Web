@@ -170,14 +170,14 @@
 				<div class="flex flex-col gap-4 mb-10">
                     <div class="flex items-center gap-4">
                         
-                        <!-- <button 
+                        <button 
                             onclick={handleAddToCart}
                             disabled={isOutOfStock}
                             class="border-2 p-4 rounded-lg transition-all flex items-center justify-center shadow-sm shrink-0 {isOutOfStock ? 'border-gray-200 bg-gray-100 text-gray-400 cursor-not-allowed opacity-70' : 'border-[#0E3A6B] text-[#0E3A6B] bg-white hover:bg-blue-50'}"
                             title={isOutOfStock ? "Sản phẩm hiện đang hết hàng" : "Thêm vào giỏ hàng"}
                         >
                             <ShoppingBag class="size-6" />
-                        </button> -->
+                        </button>
 
                         <a 
                             href={isOutOfStock ? undefined : "tel:0965060363"}

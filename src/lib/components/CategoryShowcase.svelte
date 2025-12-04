@@ -1,48 +1,16 @@
 <script lang="ts">
 	import { ChevronRight } from '@lucide/svelte';
+	import { onMount } from 'svelte';
+let categories = $state<any[]>([]);
 
-const categories = [
-		{ 
-			title: "Máy Băm Chuối", 
-			desc: "Hai chức năng, đa năng 3kW, thái chuối mịn",
-			img: "/assets/may-bam-chuoi.png"  
-		},
-		{ 
-			title: "Máy Băm Cỏ", 
-			desc: "Hai chức năng, đa năng 3kW, đa chức năng",
-			img: "/assets/may-bam-co.png" 
-		},
-		{ 
-			title: "Máy Chăn Nuôi", 
-			desc: "Nghiền thức ăn chăn nuôi B12/ B20",
-			img: "/assets/may-chan-nuoi.png" 
-		},
-		{ 
-			title: "Máy Chế Biến Thực Phẩm", 
-			desc: "Máy nổ bỏng, nghiền bột siêu mịn",
-			img: "/assets/may-che-bien-thuc-pham.png" 
-		},
-		{ 
-			title: "Máy Ép Cám Viên", 
-			desc: "Máy ép cám viên S150/ S160/ S180",
-			img: "/assets/may-ep-cam-vien.png" 
-		},
-		{ 
-			title: "Máy Nông Nghiệp", 
-			desc: "Máy ép cám viên S150/ S160/ S180",
-			img: "/assets/may-nong-nghiep.png" 
-		},
-		{ 
-			title: "Máy & Công Nghệ Khác", 
-			desc: "Air shower, máy bóc lạc, máy băm gỗ",
-			img: "/assets/may-cn-khac.png" 
-		},
-		{ 
-			title: "Thiết Bị Sấy Hấp", 
-			desc: "Máy sấy dân dụng đa năng MS10/ MS30",
-			img: "/assets/thiet-bi-say-hap.png" 
-		},
-	];
+onMount(async () => {
+        try {
+            const res = await fetch('http://localhost:3001/categories');
+            categories = await res.json();
+        } catch (error) {
+            console.error("Error loading categories:", error);
+        }
+    });
 </script>
 
 <div class="py-10 bg-white">
@@ -57,6 +25,9 @@ const categories = [
 	</div>
 
 	<div class="flex justify-center gap-1 flex-wrap px-4">
+	{#if categories.length === 0}
+            <p class="text-gray-400 italic">Đang tải danh mục...</p>
+    {:else}	
 		{#each categories as cat}
 			
 			<a href={`/products?tab=${cat.title}#shop-section`} class="block w-[140px] h-[250px] bg-white rounded-md border border-gray-200 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 ease-out cursor-pointer group overflow-hidden relative">
@@ -82,6 +53,7 @@ const categories = [
                 <div class="absolute bottom-0 left-0 w-full h-1 bg-[#00AEEF] opacity-0 group-hover:opacity-100 transition-opacity"></div>
 			</a>
 		{/each}
+	{/if}
 	</div>
 
 </div>

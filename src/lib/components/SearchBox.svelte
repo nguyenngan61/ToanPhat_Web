@@ -3,34 +3,54 @@
 	import { ChevronDown } from '@lucide/svelte';
 	import { goto } from '$app/navigation';
 
-	const data = [
-		{ label: 'Máy băm chuối đa năng', value: 'may-bam-chuoi' },
-		{ label: 'Máy băm cỏ, xay nghiền', value: 'may-bam-co' },
-		{ label: 'Máy trộn thức ăn chăn nuôi', value: 'may-tron-thuc-an' },
-		{ label: 'Máy ép cám viên S150', value: 'may-ep-cam-vien' },
-		{ label: 'Máy rang đa năng', value: 'may-rang' },
-		{ label: 'Tủ sấy thực phẩm', value: 'tu-say' },
-		{ label: 'Máy thái chuối mịn', value: 'may-thai-chuoi' },
-		{ label: 'Máy nông nghiệp', value: 'may-nong-nghiep' }
-	];
-
-	let items = $state(data);
-	let searchValue = $state(""); 
+	// 1. STATE
+	let items = $state<any[]>([]); // Start empty
+	let searchValue = $state("");
+    let debounceTimer: any;
 
 	const collection = $derived(
 		useListCollection({
 			items: items,
-			itemToString: (item) => item.label,
-			itemToValue: (item) => item.value,
+			itemToString: (item) => item.name, // Use 'name' from db.json
+			itemToValue: (item) => item.id,
 		}),
 	);
 
-	const onOpenChange = () => { items = data; };
+    // 2. FETCH FUNCTION
+    async function fetchSuggestions(query: string) {
+        if (!query) {
+            items = [];
+            return;
+        }
+        try {
+            // JSON Server supports partial search with 'q='
+            // Example: GET /products?q=chuối
+            const res = await fetch(`http://localhost:3001/products?q=${encodeURIComponent(query)}`);
+            const data = await res.json();
+            
+            // Limit to top 5 suggestions to keep dropdown clean
+            items = data.slice(0, 5);
+        } catch (error) {
+            console.error("Search Error:", error);
+        }
+    }
 
-	const onInputValueChange: ComboboxRootProps['onInputValueChange'] = (event) => {
-		searchValue = event.inputValue; 
-		const filtered = data.filter((item) => item.label.toLowerCase().includes(event.inputValue.toLowerCase()));
-		items = filtered.length > 0 ? filtered : []; 
+	const onOpenChange = () => { 
+        // Optional: Load default suggestions when opening empty
+        if (items.length === 0) fetchSuggestions(""); 
+    };
+
+	// 3. INPUT HANDLER (With Debounce)
+	const onInputValueChange = (event: any) => {
+		searchValue = event.inputValue;
+        
+        // Clear previous timer
+        clearTimeout(debounceTimer);
+        
+        // Set new timer (wait 300ms before fetching)
+        debounceTimer = setTimeout(() => {
+            fetchSuggestions(searchValue);
+        }, 300);
 	};
 
 	const handleSearch = () => {
@@ -62,22 +82,22 @@
 
 		<Portal>
 			<Combobox.Positioner style="z-index: 99999;">
-				<Combobox.Content class="bg-[#0E3A6B] border-[#0E3A6B] text-white rounded-md mt-1 shadow-2xl overflow-hidden w-var(--bits-combobox-anchor-width)]">
+				<Combobox.Content class="bg-[#0E3A6B] border-[#0E3A6B] text-white rounded-md mt-1 shadow-2xl overflow-hidden w-(--bits-combobox-anchor-width)">
 					{#if items.length > 0}
-						{#each items as item (item.value)}
+						{#each items as item (item.id)}
 							<Combobox.Item 
 								{item} 
 								class="px-4 py-2 cursor-pointer transition-colors hover:bg-white/20 focus:bg-white/20 outline-none"
 								onclick={() => {
-									searchValue = item.label;
+									searchValue = item.name; 
 									handleSearch(); 
 								}}
 							>
-								<Combobox.ItemText>{item.label}</Combobox.ItemText>
+								<Combobox.ItemText>{item.name}</Combobox.ItemText>
 							</Combobox.Item>
 						{/each}
-					{:else}
-						<div class="px-4 py-2 text-white/70 italic text-sm">Nhấn Enter để tìm kiếm...</div>
+					{:else if searchValue.length > 2}
+                        <div class="px-4 py-2 text-white/70 italic text-sm">Không tìm thấy sản phẩm...</div>
 					{/if}
 				</Combobox.Content>
 			</Combobox.Positioner>

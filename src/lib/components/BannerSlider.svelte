@@ -1,28 +1,26 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { ChevronLeft, ChevronRight } from '@lucide/svelte';
-const images = [
-		{
-			src: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1200&auto=format&fit=crop", 
-			alt: "Agricultural Machine Harvesting" 
-		},
-		{
-			src: "https://images.unsplash.com/photo-1605000797499-95a51c5269ae?q=80&w=1200&auto=format&fit=crop", 
-			alt: "Farmer in rice field" 
-		},
-		{
-			src: "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?q=80&w=1200&auto=format&fit=crop", 
-			alt: "Wheat and Bran close up" 
-		}
-	];
+	let images = $state<any[]>([]);
 
 	let currentIndex = $state(0);
 	let timer: any;
 
-	const nextSlide = () => { currentIndex = (currentIndex + 1) % images.length; };
-	const prevSlide = () => { currentIndex = (currentIndex - 1 + images.length) % images.length; };
+	const nextSlide = () => { if(images.length) currentIndex = (currentIndex + 1) % images.length; };
+	const prevSlide = () => { if(images.length) currentIndex = (currentIndex - 1 + images.length) % images.length; };
 
 	onMount(() => {
+        const loadBanners = async () => {
+            try {
+                const res = await fetch('http://localhost:3001/banners');
+                if (res.ok) {
+                    images = await res.json();
+                }
+            } catch (error) {
+                console.error("Error loading banners:", error);
+            }
+        };
+        loadBanners();
 		startTimer();
 		return () => stopTimer();
 	});
@@ -38,7 +36,7 @@ const images = [
 	role="region"
 	aria-label="Banner Slider"
 >
-	
+	{#if images.length > 0}
 	{#each images as image, index}
 		<div 
 			class="absolute inset-0 w-full h-full transition-opacity duration-700 ease-in-out bg-surface-100-900"
@@ -64,5 +62,9 @@ const images = [
 	>
 		<ChevronRight size={28} />
 	</button>
-
+	{:else}
+        <div class="w-full h-full flex items-center justify-center bg-gray-100 text-gray-400">
+            Đang tải hình ảnh...
+        </div>
+    {/if}
 </div>

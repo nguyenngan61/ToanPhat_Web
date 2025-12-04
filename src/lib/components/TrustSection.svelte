@@ -1,43 +1,38 @@
 <script lang="ts">
 	import { Users, MapPin, Medal, Package } from '@lucide/svelte';
+    import { onMount } from 'svelte';
 
-	const features = [
-		{
-			title: "ĐỘI NGŨ NHÂN VIÊN CHUYÊN NGHIỆP",
-			desc: "Đội ngũ tư vấn viên luôn quan tâm tới nhu cầu của khách hàng chu đáo",
-			icon: Users,
-			color: "text-blue-600",
-			bg: "bg-blue-100"
-		},
-		{
-			title: "PHÂN PHỐI TRÊN TOÀN QUỐC",
-			desc: "Với mạng lưới phân phối trên toàn quốc, chúng tôi mang đến dịch vụ hỗ trợ tối ưu",
-			icon: MapPin,
-			color: "text-green-600",
-			bg: "bg-green-100"
-		},
-		{
-			title: "LIÊN TỤC NÂNG CAO CHẤT LƯỢNG",
-			desc: "Để thỏa mãn nhu cầu của Quý Khách, chúng tôi liên tục cải tiến và phát triển",
-			icon: Medal,
-			color: "text-yellow-600",
-			bg: "bg-yellow-100"
-		},
-		{
-			title: "DANH MỤC SẢN PHẨM ĐA DẠNG",
-			desc: "Công ty của chúng tôi có mọi thứ các bạn cần cho nhu cầu sản xuất",
-			icon: Package,
-			color: "text-purple-600",
-			bg: "bg-purple-100"
-		}
-	];
+    // 1. Icon Mapping (Database String -> Svelte Component)
+    // The DB has "icon": "users", we map it to the Users component here.
+    const iconMap: Record<string, any> = {
+        "users": Users,
+        "mapPin": MapPin,
+        "medal": Medal,
+        "package": Package
+    };
 
+    // 2. STATE
+	let trust_reasons = $state<any[]>([]);
+	
+    // 3. Static Data for Certificates (These remain static as they are assets)
 	const certs = [
 		{ name: "CE", img: "/assets/cert-ce.png" },
 		{ name: "ISO 9001:2015", img: "/assets/cert-iso.png" },
 		{ name: "Hàng Việt Nam CLC", img: "/assets/cert-vn.png" },
 		{ name: "Trusted Green", img: "/assets/cert-green.png" }
 	];
+
+    // 4. FETCH DATA
+    onMount(async () => {
+        try {
+            const res = await fetch('http://localhost:3001/trust_reasons');
+            if (res.ok) {
+                trust_reasons = await res.json();
+            }
+        } catch (error) {
+            console.error("Error loading trust section:", error);
+        }
+    });
 </script>
 
 <section class="w-full bg-white pb-20">
@@ -50,24 +45,29 @@
 
 	<div class="w-[75%] mx-auto relative z-10">
 		
-		<div class="grid grid-cols-1 md:grid-cols-4 gap-6 -mt-24">
-			{#each features as item}
-				<div class="bg-white rounded-xl shadow-lg p-6 text-center flex flex-col items-center gap-4 hover:-translate-y-2 transition-transform duration-300 ease-out border border-gray-100">
-					
-					<div class={`p-2 rounded-full ${item.bg} ${item.color}`}>
-						<svelte:component this={item.icon} size={32} />
-					</div>
+        {#if trust_reasons.length === 0}
+            <div class="text-center py-10 -mt-24 bg-white rounded-xl shadow-lg">Đang tải dữ liệu...</div>
+        {:else}
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 -mt-24">
+                {#each trust_reasons as item}
+                    <div class="bg-white rounded-xl shadow-lg p-6 text-center flex flex-col items-center gap-4 hover:-translate-y-2 transition-transform duration-300 ease-out border border-gray-100">
+                        
+                        <div class={`p-4 rounded-full ${item.bg} ${item.color}`}>
+                            <!-- svelte-ignore svelte_component_deprecated -->
+                            <svelte:component this={iconMap[item.icon] || Package} size={32} />
+                        </div>
 
-					<h3 class="font-bold text-[#0E3A6B] text-sm uppercase leading-tight h-10 flex items-center justify-center">
-						{item.title}
-					</h3>
-					<p class="text-xs text-gray-500 leading-relaxed">
-						{item.desc}
-					</p>
+                        <h3 class="font-bold text-[#0E3A6B] text-sm uppercase leading-tight h-10 flex items-center justify-center">
+                            {item.title}
+                        </h3>
+                        <p class="text-xs text-gray-500 leading-relaxed">
+                            {item.desc}
+                        </p>
 
-				</div>
-			{/each}
-		</div>
+                    </div>
+                {/each}
+            </div>
+        {/if}
 
 	</div>
 

@@ -2,55 +2,24 @@
 	import { Menu, Portal } from '@skeletonlabs/skeleton-svelte';
 	import { ChevronDown } from '@lucide/svelte';
 	import { goto } from '$app/navigation';
+	import { onMount } from 'svelte';
 
-	const productCategories = [
-		{ 
-			type: "Máy Băm Chuối", 
-			list: "Hai chức năng, đa năng 3kW, thái chuối mịn",
-			value: "may-bam-chuoi"
-		},
-		{ 
-			type: "Máy Băm Cỏ", 
-			list: "Hai chức năng, đa năng 3kW, đa chức năng",
-			value: "may-bam-co"
-		},
-		{ 
-			type: "Máy Chăn Nuôi", 
-			list: "Nghiền thức ăn chăn nuôi B12/ B20",
-			value: "may-chan-nuoi"
-		},
-		{ 
-			type: "Máy Chế Biến Thực Phẩm", 
-			list: "Máy nổ bỏng, nghiền bột siêu mịn",
-			value: "may-che-bien-thuc-pham"
-		},
-		{ 
-			type: "Máy Ép Cám Viên", 
-			list: "Máy ép cám viên S150/ S160/ S180/ S200/ S250/ S270",
-			value: "may-ep-cam-vien"
-		},
-		{ 
-			type: "Máy Nông Nghiệp", 
-			list: "Máy ép cám viên S150/ S160/ S180/ S200/ S250/ S270",
-			value: "may-nong-nghiep"
-		},
-		{ 
-			type: "Máy & Công Nghệ Khác", 
-			list: "Air shower, máy bóc lạc, máy băm gỗ, pass box",
-			value: "may-cong-nghe-khac"
-		},
-		{ 
-			type: "Thiết Bị Sấy Hấp", 
-			list: "Máy sấy dân dụng đa năng MS10/ MS30/ MS50",
-			value: "thiet-bi-say-hap"
-		}
-	];
+    // 1. STATE: Start empty
+	let productCategories = $state<any[]>([]);
 
-    // FIX: Updated to point to Product Page Tabs instead of Search
+    // 2. FETCH: Get categories from API
+    onMount(async () => {
+        try {
+            const res = await fetch('http://localhost:3001/categories');
+            if (res.ok) {
+                productCategories = await res.json();
+            }
+        } catch (error) {
+            console.error("Error loading categories:", error);
+        }
+    });
+
 	function handleCategoryClick(categoryName: string) {
-        // 1. Navigate to /products
-        // 2. Set ?tab=... parameter
-        // 3. Add #shop-section to scroll down automatically
 		goto(`/products?tab=${encodeURIComponent(categoryName)}#shop-section`);
 	}
 
@@ -99,6 +68,9 @@
 							</div>
 						</Menu.Item>
 					{/each}
+					{#if productCategories.length === 0}
+                        <div class="col-span-full text-center py-4 text-gray-400 italic">Đang tải danh mục...</div>
+                    {/if}
 				</div>
 
 			</Menu.Content>

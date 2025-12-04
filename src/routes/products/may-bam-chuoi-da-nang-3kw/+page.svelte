@@ -144,13 +144,13 @@
 				</div>
 
 				<div class="flex items-center gap-4 mb-10">
-					<!-- <button 
+					<button 
 						onclick={handleAddToCart}
 						class="border-2 border-[#0E3A6B] text-[#0E3A6B] bg-white p-3 rounded-lg hover:bg-blue-50 transition-all flex items-center justify-center shadow-sm" 
 						title="Thêm vào giỏ hàng"
 					>
 						<ShoppingBag class="size-7" />
-					</button> -->
+					</button>
 
 					<button onclick={handleBuyNow} class="flex-1 bg-linear-to-b from-[#0E3A6B] to-[#00AEEF] text-white text-lg font-bold py-3 rounded-lg hover:brightness-110 transition-all shadow-md flex items-center justify-center gap-2">
 						<span>MUA NGAY</span>

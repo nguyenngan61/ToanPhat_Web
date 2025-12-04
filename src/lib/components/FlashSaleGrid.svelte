@@ -147,9 +147,9 @@
 										></div>
 									</div>
 								</div>
-								<!-- <button class="shrink-0 p-1.5 rounded-full border border-red-600 text-red-600 hover:bg-red-600 hover:text-white transition-colors">
+								<button class="shrink-0 p-1.5 rounded-full border border-red-600 text-red-600 hover:bg-red-600 hover:text-white transition-colors">
 									<ShoppingCart class="size-4" />
-								</button> -->
+								</button>
 							</div>
 						</div>
 					</a>

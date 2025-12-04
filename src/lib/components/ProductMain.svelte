@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { onMount } from 'svelte';
 	import { LayoutGrid, ShoppingBasket, Star, Phone, Ban } from '@lucide/svelte';
     import { cart } from '$lib/stores/cart.svelte';
 
@@ -19,7 +20,6 @@
 
    let activeTab = $state("Tất Cả");
 
-    // === FIX: ROBUST SYNC LOGIC ===
     // This ensures activeTab updates whenever the URL param changes
     $effect(() => {
         if (selectedCategory) {
@@ -39,80 +39,33 @@
         }
     });
 
-	const allProducts = [
-		{
-			id: 1,
-			name: "Máy băm chuối đa năng 3kw",
-			price: 600000, oldPrice: 1000000, discount: 40, sold: 4,
-			img: "/assets/may-bam-chuoi.png",
-			rating: 5,
-			category: "Máy Băm Chuối", // Must match Tab EXACTLY
-            type: "machine"
-		},
-		{
-			id: 2,
-			name: "Máy băm cỏ, xay nghiền đa năng",
-			price: 700000, oldPrice: 1000000, discount: 30, sold: 2,
-			img: "/assets/may-bam-co.png", 
-			rating: 5,
-			category: "Máy Băm Cỏ",
-            type: "machine"
-		},
-		{
-			id: 3,
-			name: "Máy trộn thức ăn chăn nuôi 50kg",
-			price: 800000, oldPrice: 1000000, discount: 20, sold: 0,
-			img: "/assets/may-chan-nuoi.png",
-			rating: 4,
-			category: "Máy Chăn Nuôi",
-            type: "machine"
-		},
-        {
-			id: 4,
-			name: "Máy Rang Đa Năng 15 kg",
-			price: 700000, oldPrice: 1000000, discount: 30, sold: 5,
-			img: "/assets/may-che-bien-thuc-pham.png",
-			rating: 5,
-			category: "Máy Chế Biến Thực Phẩm",
-            type: "machine"
-		},
-        {
-			id: 5,
-			name: "Máy Ép Cám Viên S150",
-			price: 2500000,
-			img: "/assets/may-ep-cam-vien.png",
-			rating: 5,
-			category: "Máy Ép Cám Viên",
-            type: "machine"
-		},
-        {
-			id: 31,
-			name: "Máy băm cỏ voi công suất lớn",
-			price: 3250000,
-			img: "/assets/may-nong-nghiep.png",
-			rating: 5,
-			category: "Máy Băm Cỏ",
-            type: "machine"
-		},
-        {
-            id: 101,
-            name: "Máy sấy hoa quả đa năng MS10",
-            price: 0, isContactPrice: true,
-            img: "/assets/may-say-ms10.png",
-            rating: 4,
-            category: "Thiết Bị Sấy Hấp",
-            type: "machine"
-        },
-        {
-            id: 102,
-            name: "Máy nghiền bột mịn inox",
-            price: 0, isContactPrice: true, isOutOfStock: true,
-            img: "/assets/may-nghien-bot-inox.png",
-            rating: 5,
-            category: "Máy Chế Biến Thực Phẩm",
-            type: "machine"
+	let allProducts = $state<any[]>([]);
+    let isLoading = $state(true);
+    let error = $state("");
+
+    async function fetchProducts() {
+        try {
+            const response = await fetch('http://localhost:3001/products');
+            
+            if (!response.ok) {
+                throw new Error('Failed to connect to API');
+            }
+
+            const data = await response.json();
+
+            allProducts = data;
+            isLoading = false;
+            
+        } catch (err) {
+            console.error("Error:", err);
+            error = "Không thể tải dữ liệu sản phẩm.";
+            isLoading = false;
         }
-	];
+    }
+
+    onMount(() => {
+        fetchProducts();
+    });
 
     // 4. FILTER LOGIC
     let displayProducts = $derived.by(() => {
@@ -158,9 +111,7 @@
     };
 
     const getProductUrl = (p: any) => {
-        if (p.id === 101) return "/products/may-say-ms10";
-        if (p.id === 102) return "/products/may-nghien-bot-inox";
-        return p.name.includes("Máy băm chuối") ? "/products/may-bam-chuoi-da-nang-3kw" : "#";
+        return `/products/${p.id}`;
     }
 </script>
 
@@ -187,6 +138,14 @@
 				</button>
 			{/each}
 		</div>
+
+        {#if isLoading}
+            <div class="flex justify-center items-center py-20">
+                <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#0E3A6B]"></div>
+            </div>
+        {:else if error}
+            <div class="text-center py-20 text-red-500">{error}</div>
+        {:else}
 
 		<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
             {#each displayProducts as p (p.id)}
@@ -240,14 +199,14 @@
                             {:else}
                                 <div class="flex-1"></div>
                             {/if}
-
-							<!-- <button 
+                                
+							<button 
                                 onclick={(e) => { e.preventDefault(); if(p.isOutOfStock) return; if(p.isContactPrice) { alert("Vui lòng gọi 0965.060.363"); } else { cart.add(p, 1); } }}
                                 class="size-8 shrink-0 rounded-full border flex items-center justify-center transition-colors {p.isOutOfStock ? 'border-gray-200 bg-gray-100 text-gray-400 cursor-not-allowed' : p.isContactPrice ? 'border-blue-100 bg-blue-50 text-blue-500 hover:bg-blue-500 hover:text-white' : 'border-red-100 bg-red-50 text-red-500 hover:bg-red-500 hover:text-white'}"
                                 disabled={p.isOutOfStock}
                             >
                                 {#if p.isContactPrice}<Phone class="size-4" />{:else}<ShoppingBasket class="size-4" />{/if}
-							</button> -->
+							</button>
 						</div>
 					</div>
 				</a>
@@ -260,6 +219,8 @@
                 </div>
             {/if}
 		</div>
+
+    {/if}
 	</div>
     
 	<div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100 min-h-[200px] flex flex-col">

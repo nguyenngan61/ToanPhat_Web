@@ -1,54 +1,32 @@
 <script lang="ts">
 	import { Phone, Mail, MapPin } from '@lucide/svelte';
+	import { onMount } from 'svelte';
 
-	// 1. DATA SETUP
-	const locations = [
-		{
-			id: 0,
-			name: "Trụ Sở Chính",
-			companyName: "CÔNG TY CỔ PHẦN CÔNG NGHỆ CƠ KHÍ TOÀN PHÁT",
-			address: "Số 37 lô 5 – Khu công nghiệp Duyên Thái – Thường Tín – Hà Nội",
-			// Adjusted query for better accuracy
-			mapQuery: "Khu công nghiệp Duyên Thái, Thường Tín, Hà Nội"
-		},
-		{
-			id: 1,
-			name: "GBTECH Hà Nội",
-			companyName: "CÔNG TY CỔ PHẦN SẢN XUẤT VÀ PHÁT TRIỂN CÔNG NGHỆ GB VIỆT NAM",
-			address: "Nhà B20, TT 301 phố Đội Cấn – Phường Cống Vị – Quận Ba Đình – Hà Nội",
-			// Adjusted query to point to the specific street number
-			mapQuery: "301 Đội Cấn, Ba Đình, Hà Nội"
-		},
-		{
-			id: 2,
-			name: "Văn Phòng Giao Dịch",
-			companyName: "CÔNG TY CỔ PHẦN SẢN XUẤT VÀ PHÁT TRIỂN CÔNG NGHỆ GB VIỆT NAM",
-			address: "VP6 Linh Đàm – Thịnh Liệt- Hoàng Mai – Hà Nội",
-			// VP6 is a specific building, this usually finds it directly
-			mapQuery: "Tòa nhà VP6 Linh Đàm, Hoàng Mai, Hà Nội"
-		},
-		{
-			id: 3,
-			name: "Xưởng Sản Xuất",
-			companyName: "CÔNG TY CỔ PHẦN SẢN XUẤT VÀ PHÁT TRIỂN CÔNG NGHỆ GB VIỆT NAM",
-			address: "Xóm 1- Thôn Tương Chúc – Ngũ Hiệp – Thanh Trì – Hà Nội",
-			// Village specific query
-			mapQuery: "Tương Chúc, Ngũ Hiệp, Thanh Trì, Hà Nội"
-		}
-	];
-
+	// 1. STATE
+    let locations = $state<any[]>([]);
 	let activeIndex = $state(0);
-	let activeLocation = $derived(locations[activeIndex]);
 
-	function setTab(index: number) {
-		activeIndex = index;
-	}
+    // 2. FETCH DATA
+    onMount(async () => {
+        try {
+            const res = await fetch('http://localhost:3001/locations');
+            locations = await res.json();
+        } catch (error) {
+            console.error("Error loading locations:", error);
+        }
+    });
+
+	let activeLocation = $derived(locations.length > 0 ? locations[activeIndex] : null);
+
+	function setTab(index: number) { activeIndex = index; }
 </script>
 
 <section class="w-full py-12 bg-[#D9D9D9]/33">
 	
 	<div class="w-[75%] mx-auto flex flex-col gap-10">
-
+		{#if locations.length === 0}
+            <div class="text-center py-10 text-gray-500">Đang tải bản đồ...</div>
+        {:else}
 		<div class="flex flex-wrap justify-center gap-4">
 			{#each locations as loc, index}
 				<button 
@@ -135,6 +113,6 @@
 			</div>
 
 		</div>
-
+		{/if}
 	</div>
 </section>

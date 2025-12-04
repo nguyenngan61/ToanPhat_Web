@@ -169,13 +169,13 @@
 				<div class="flex flex-col gap-4 mb-10">
 					
                     <div class="flex items-center gap-4">
-                        <!-- <button 
+                        <button 
                             onclick={handleAddToCart}
                             class="border-2 border-[#0E3A6B] text-[#0E3A6B] bg-white p-4 rounded-lg hover:bg-blue-50 transition-all flex items-center justify-center shadow-sm shrink-0" 
                             title="Thêm vào giỏ hàng"
                         >
                             <ShoppingBag class="size-6" />
-                        </button> -->
+                        </button>
 
                         <a href="tel:0965060363" class="flex-1 bg-linear-to-b from-[#0E3A6B] to-[#00AEEF] text-white text-lg font-bold py-3 rounded-lg hover:brightness-125 transition-all shadow-md flex items-center justify-center gap-3">
                             <Phone class="size-6 fill-current" />

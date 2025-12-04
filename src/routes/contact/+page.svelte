@@ -9,11 +9,34 @@
     let message = $state('');
     let showSuccessPopup = $state(false);
 
-    function handleSubmit(e: Event) {
+    async function handleSubmit(e: Event) {
         e.preventDefault();
-        showSuccessPopup = true;
-        name = ''; email = ''; phone = ''; subject = ''; message = '';
-        setTimeout(() => { showSuccessPopup = false; }, 5000);
+        
+        const messageData = {
+            name, email, phone, subject, message,
+            date: new Date().toISOString()
+        };
+
+        try {
+            // POST request to save message
+            const res = await fetch('http://localhost:3001/messages', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(messageData)
+            });
+
+            if (res.ok) {
+                showSuccessPopup = true;
+                // Reset form
+                name = ''; email = ''; phone = ''; subject = ''; message = '';
+                setTimeout(() => { showSuccessPopup = false; }, 5000);
+            } else {
+                alert("Có lỗi xảy ra, vui lòng thử lại.");
+            }
+        } catch (error) {
+            console.error(error);
+            alert("Lỗi kết nối server.");
+        }
     }
 </script>
 

@@ -42,7 +42,7 @@
 						<a href="/news" class="hover:text-[#00AEEF] transition-colors">Tin Tức</a>
 						<a href="/policy" class="hover:text-[#00AEEF] transition-colors">Chính Sách</a>
 						<a href="/contact" class="hover:text-[#00AEEF] transition-colors">Liên Hệ</a>
-						<!-- <a href="/cart" class="text-[#0E3A6B] hover:opacity-80 transition-opacity relative inline-block"> 
+						<a href="/cart" class="text-[#0E3A6B] hover:opacity-80 transition-opacity relative inline-block"> 
     
 							{#if cart.count > 0}
 								<span class="absolute -top-2 -right-2 z-10 flex h-5 w-5 items-center justify-center rounded-full bg-red-600 text-[10px] font-bold text-white shadow-sm">
@@ -51,7 +51,7 @@
 							{/if}
 
 							<ShoppingCart class="size-7 fill-current" />
-						</a>-->
+						</a>
                     </nav>
 				</div>
 

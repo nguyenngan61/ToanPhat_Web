@@ -1,0 +1,548 @@
+{
+	"products": [
+		{
+			"id": "MBDN",
+			"name": "Máy băm chuối đa năng 3kw Toàn Phát",
+			"price": 1550000,
+			"oldPrice": 1000000,
+			"discount": 40,
+			"sold": 4,
+			"img": "/assets/may-bam-chuoi.png",
+			"rating": 5,
+			"status": "Còn hàng",
+			"brand": "TOANPHAT",
+			"code": "MBDN",
+			"category": "Máy Băm Chuối",
+			"type": "machine",
+			"images": [
+				"/assets/may-bam-chuoi.png",
+				"/assets/may-bam-co.png",
+				"/assets/may-chan-nuoi.png"
+			],
+			"richDetails": {
+				"intro": "Máy Băm Chuối Đa Năng Toàn Phát là dòng máy nông nghiệp được thiết kế tối ưu hóa khâu sơ chế thức ăn chăn nuôi. Sản phẩm giúp băm nhuyễn đa dạng các loại phụ phẩm, vận hành an toàn và có độ bền cao. Máy được sản xuất để đáp ứng nhu cầu tự chủ nguồn thức ăn sạch, giảm chi phí và giải phóng sức lao động cho các hộ gia đình và trang trại chăn nuôi.",
+				"fullName": "Tên đầy đủ: Máy Băm Chuối Đa Năng Toàn Phát 3kw Phiên Bản Mới, Tích Hợp Hộp Điện An Toàn Aptomat Panasonic.",
+				"features": [
+					{
+						"title": "Thiết Kế Tối Ưu – Năng Suất Vượt Trội",
+						"items": [
+							"Máy được chế tạo để đáp ứng thực tế nhu cầu băm phụ phẩm nông nghiệp nhanh chóng và hiệu quả, giúp người dùng tiết kiệm thời gian và chi phí.",
+							"Hệ thống băm được thiết kế với phễu nạp nguyên liệu hình phễu rộng, tối ưu cho các loại rau củ cồng kềnh, đặc biệt là thân cây chuối.",
+							"Trang bị cửa xả nguyên liệu có thể điều chỉnh, cho phép người dùng kiểm soát độ văng xa/gần của thành phẩm, phù hợp với nhiều điều kiện làm việc."
+						]
+					},
+					{
+						"title": "Độ Bền Cao – Hệ Thống Băm Chuyên Dụng",
+						"items": [
+							"Bộ dao chính sử dụng vật liệu cao cấp, chịu tải tốt và ít hao mòn. Gồm 1 dao to 2 lưỡi được làm từ nhíp ô tô, đảm bảo độ cứng và tuổi thọ vượt trội so với các dòng dao thép thông thường.",
+							"Hệ thống dao băm nhuyễn gồm 14 dao làm bằng inox 304 (chống gỉ sét), đảm bảo vệ sinh cho thức ăn thành phẩm và duy trì độ sắc bén lâu dài."
+						]
+					},
+					{
+						"title": "Vận Hành An Toàn – Cải Tiến Vượt Trội",
+						"items": [
+							"Phiên bản mới được trang bị hộp điện điều khiển riêng biệt, tích hợp aptomat chống giật của Panasonic và đèn báo nguồn.",
+							"Thiết kế này đảm bảo an toàn tuyệt đối cho người vận hành, đồng thời bảo vệ động cơ, tăng tuổi thọ mô tơ (chống chập cháy).",
+							"Máy được cải tiến thêm 2 bánh xe và tay đẩy, giúp di chuyển thuận lợi trong khu vực chăn nuôi mà vẫn đảm bảo độ ổn định, không rung lắc khi hoạt động."
+						]
+					}
+				],
+				"closing": "Máy Băm Chuối Đa Năng Toàn Phát được ứng dụng rộng rãi để băm thức ăn cho gia súc, gia cầm (cá, lợn, gà, vịt...). Máy chuyên dùng để băm thân cây chuối, cây ngô, củ sắn, cỏ voi và nhiều loại rau, củ, quả khác.",
+
+				"specs": {
+					"ĐỘNG CƠ": {
+						"Công suất": "3 kw",
+						"Nguồn điện": "220V",
+						"Tốc độ": "1450 (Vòng/phút)"
+					},
+					"BẢO HÀNH": {
+						"Kỹ thuật": "12 tháng",
+						"Động cơ": "Theo từng hãng sản xuất"
+					},
+					"TRỌNG LƯỢNG": {
+						"Nguyên bộ": "63 kg",
+						"Không động cơ": "42 kg"
+					},
+					"THÔNG SỐ KHÁC": {
+						"Năng suất": "5 – 8 tạ/giờ",
+						"Kích thước": "88x46x76 cm"
+					}
+				},
+
+				"guide": {
+					"type": "video",
+					"steps": [
+						"Lắp đặt máy ở nơi bằng phẳng",
+						"Khởi động máy sau đó đưa nguyên liệu cần băm vào cửa nạp nguyên liệu, hệ thống dao sẽ làm việc và đưa ra cửa xả nguyên liệu.",
+						"Vận hành xong chờ máy gạt hết nguyên liệu ra khỏi máy rồi tắt máy."
+					],
+					"videoUrl": "Hr1W3ySJIqE",
+					"features": "Mọi thắc mắc xin vui lòng liên hệ số Hotline: 0965060363"
+				}
+			}
+		},
+		{
+			"id": "MS10",
+			"name": "Máy sấy hoa quả máy sấy dân dụng đa năng MS10",
+			"price": 0,
+			"isContactPrice": true,
+			"img": "/assets/may-say-ms10.png",
+			"rating": 4,
+			"status": "Còn hàng",
+			"brand": "TOANPHAT",
+			"code": "MS10",
+			"category": "Thiết Bị Sấy Hấp",
+			"type": "machine",
+			"images": ["/assets/may-say-ms10.png"],
+			"richDetails": {
+				"intro": "Máy sấy đa năng MS10 là dòng máy sấy công nghiệp mini của Công ty Cổ phần Công nghệ Cơ khí Toàn Phát. Máy có khả năng sấy khô bất cứ sản phẩm nào như: hoa quả, thực phẩm, dược liệu, thủy hải sản... Tủ sấy có công suất nhỏ nên tiết kiệm chi phí.",
+				"specs": {
+					"KỸ THUẬT": {
+						"Kích thước phủ bì": "530x530x1100 mm",
+						"Thể tích buồng sấy": "100 lít",
+						"Số khay sấy": "6 khay (Inox 304)",
+						"Nhiệt độ sấy": "30 – 95 ºC",
+						"Công suất tiêu thụ": "400w/H",
+						"Nguồn điện": "1 pha 220V/50hZ"
+					},
+					"CẤU TẠO": {
+						"Buồng sấy": "Sắt sơn tĩnh điện chịu nhiệt, bọc bông thủy tinh dày 40mm.",
+						"Cánh cửa": "Có gioăng chịu nhiệt lên đến 200 độ C làm kín.",
+						"Nguyên lý": "Quạt tản nhiệt lớn, cưỡng bức đối lưu không khí."
+					}
+				},
+				"guide": {
+					"type": "grid",
+					"items": [
+						{
+							"icon": "🍎",
+							"title": "Trái cây",
+							"desc": "Mít, chuối, thanh long, hồng, nho...",
+							"cap": "2 kg/khay → 12 kg/máy"
+						},
+						{
+							"icon": "🥬",
+							"title": "Rau họ cải",
+							"desc": "Bắp cải, cải xanh, cải thìa...",
+							"cap": "1 kg/khay → 6 kg/máy"
+						},
+						{
+							"icon": "🥕",
+							"title": "Củ quả",
+							"desc": "Củ cải, cà rốt, khoai, hành, tỏi...",
+							"cap": "2 kg/khay → 12 kg/máy"
+						},
+						{
+							"icon": "🌿",
+							"title": "Các loại lá",
+							"desc": "Chùm ngây, chè, lá chanh, hành lá...",
+							"cap": "1 kg/khay → 6 kg/máy"
+						},
+						{
+							"icon": "🦐",
+							"title": "Thủy hải sản",
+							"desc": "Tôm, cá, mực...",
+							"cap": "2 kg/khay → 12 kg/máy"
+						},
+						{
+							"icon": "💊",
+							"title": "Dược liệu",
+							"desc": "Thân cây, gốc cây thuốc thái mỏng...",
+							"cap": "1 kg/khay → 6 kg/máy"
+						}
+					]
+				}
+			}
+		},
+		{
+			"id": "I300",
+			"name": "Máy nghiền bột mịn inox 300 (Siêu Mịn)",
+			"price": 0,
+			"isContactPrice": true,
+			"isOutOfStock": true,
+			"img": "/assets/may-nghien-bot-inox.png",
+			"rating": 5,
+			"status": "Hết hàng",
+			"brand": "TOANPHAT",
+			"code": "I300",
+			"category": "Máy Chế Biến Thực Phẩm",
+			"type": "machine",
+			"images": ["/assets/may-nghien-bot-inox.png"],
+			"richDetails": {
+				"intro": "Máy nghiền bột inox 300 có khả năng nghiền siêu mịn. Đây là sản phẩm ưu việt trong dòng máy chế biến thực phẩm. Đặc biệt, với thiết kế búa cánh quạt tiên tiến, máy còn có thể nghiền các loại hạt chứa nhiều tinh dầu như macca, đậu nành mà không bị tắc sàng.",
+				"specs": {
+					"THÔNG SỐ": {
+						"Nguồn điện": "380V (3 pha)",
+						"Công suất động cơ": "5.5 - 7.5 kW",
+						"Năng suất": "30 - 50 kg/giờ",
+						"Chất liệu": "100% Inox cao cấp (Chống gỉ)",
+						"Kích thước sàng": "0.3mm; 0.4mm; 0.5mm (Tùy chọn)"
+					}
+				},
+				"guide": {
+					"type": "qa",
+					"items": [
+						{
+							"q": "1. Máy nghiền được những loại hạt nào?",
+							"a": "Hầu hết các loại hạt ngũ cốc không chứa dầu hoặc chứa ít hơn 10% dầu."
+						},
+						{
+							"q": "2. Lưu ý khi nghiền hạt có dầu?",
+							"a": "Hạt có dầu (Lạc, Vừng, Đậu nành) khi nghiền sẽ sinh nhiệt làm tách dầu gây tắc sàng. Bắt buộc tỷ lệ dầu dưới 10%."
+						},
+						{
+							"q": "3. Có thể nghiền lại lần 2 cho mịn hơn không?",
+							"a": "Không. Khi nghiền lần 1 hạt đã thành bột nhẹ, cho vào lại sẽ không hiệu quả."
+						},
+						{
+							"q": "4. Máy dùng điện 1 pha (220V) được không?",
+							"a": "Không. Dòng công suất lớn này cần điện 3 pha để đạt tốc độ cao."
+						}
+					]
+				}
+			}
+		},
+		{
+			"id": "2",
+			"name": "Máy băm cỏ, xay nghiền đa năng",
+			"price": 700000,
+			"oldPrice": 1000000,
+			"discount": 30,
+			"sold": 2,
+			"img": "/assets/may-bam-co.png",
+			"rating": 5,
+			"category": "Máy Băm Cỏ",
+			"type": "machine",
+			"status": "Còn hàng"
+		},
+		{
+			"id": "3",
+			"name": "Máy trộn thức ăn chăn nuôi 50kg",
+			"price": 800000,
+			"oldPrice": 1000000,
+			"discount": 20,
+			"sold": 0,
+			"img": "/assets/may-chan-nuoi.png",
+			"rating": 4,
+			"category": "Máy Chăn Nuôi",
+			"type": "machine",
+			"status": "Còn hàng"
+		},
+		{
+			"id": "4",
+			"name": "Máy Rang Đa Năng 15 kg",
+			"price": 700000,
+			"oldPrice": 1000000,
+			"discount": 30,
+			"sold": 5,
+			"img": "/assets/may-che-bien-thuc-pham.png",
+			"rating": 5,
+			"category": "Máy Chế Biến Thực Phẩm",
+			"type": "machine",
+			"status": "Còn hàng"
+		},
+		{
+			"id": "5",
+			"name": "Máy Ép Cám Viên S150",
+			"price": 2500000,
+			"oldPrice": 3000000,
+			"discount": 15,
+			"sold": 9,
+			"img": "/assets/may-ep-cam-vien.png",
+			"rating": 5,
+			"category": "Máy Ép Cám Viên",
+			"type": "machine",
+			"status": "Còn hàng"
+		},
+		{
+			"id": "31",
+			"name": "Máy băm cỏ voi công suất lớn",
+			"price": 3250000,
+			"img": "/assets/may-nong-nghiep.png",
+			"rating": 5,
+			"category": "Máy Băm Cỏ",
+			"type": "machine",
+			"status": "Còn hàng"
+		}
+	],
+	"orders": [
+		{
+			"id": "1764686114746",
+			"date": "2025-12-02T14:35:14.746Z",
+			"customer": {
+				"name": "Tin",
+				"phone": "0321656656",
+				"address": "ed, Phường Liễu Giai, Quận Ba Đình, Hà Nội",
+				"note": "ed"
+			},
+			"items": [
+				{
+					"name": "Máy trộn thức ăn chăn nuôi 50kg",
+					"img": "/assets/may-chan-nuoi.png",
+					"price": 800000,
+					"oldPrice": 1000000,
+					"discount": 20,
+					"sold": 8,
+					"category": "Máy Chăn Nuôi",
+					"rating": 4,
+					"isSelected": true,
+					"id": 1764386227912.4465,
+					"quantity": 1
+				}
+			],
+			"payment": {
+				"method": "banking",
+				"shippingFee": 50000,
+				"discount": 40000,
+				"total": 810000
+			},
+			"status": "Pending"
+		},
+		{
+			"id": "1764686572116",
+			"date": "2025-12-02T14:42:52.116Z",
+			"customer": {
+				"name": "plil",
+				"phone": "01234534554534",
+				"address": "Phường Hiệp Bình Chánh, Thành phố Thủ Đức, Hồ Chí Minh",
+				"note": "op"
+			},
+			"items": [
+				{
+					"name": "Máy băm cỏ, xay nghiền đa năng",
+					"img": "/assets/may-bam-co.png",
+					"price": 700000,
+					"oldPrice": 1000000,
+					"discount": 30,
+					"sold": 2,
+					"category": "Máy Băm Cỏ",
+					"rating": 4.5,
+					"isSelected": true,
+					"id": 1764685301567.7268,
+					"quantity": 1
+				}
+			],
+			"payment": {
+				"method": "banking",
+				"shippingFee": 35000,
+				"discount": 70000,
+				"total": 665000
+			},
+			"status": "Pending"
+		}
+	],
+	"messages": [],
+	"quotes": [],
+	"news": [
+		{
+			"id": "1",
+			"title": "Khám Phá Sức Mạnh 'Cỗ Máy In Tiền': Đánh Giá Chi Tiết Máy Ép Cám Viên S200",
+			"date": "18/11/2025",
+			"desc": "Chi phí thức ăn chăn nuôi đang bào mòn lợi nhuận của bà con? Đã đến lúc tự chủ nguồn cám sạch...",
+			"img": "https://images.unsplash.com/photo-1718824331840-399943ff5c1e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NTY2MzF8MHwxfHNlYXJjaHw2fHxtYWNoaW5lfGVufDB8fHx8MTc2MzgwMTY2N3ww&ixlib=rb-4.1.0&q=80&w=1080",
+			"type": "main",
+			"content": "<p><strong>Máy ép cám viên S200</strong> là giải pháp tối ưu cho bà con nông dân...</p><p>Với công suất lớn, máy có thể ép được...</p><h3>Ưu điểm vượt trội</h3><ul><li>Năng suất cao: 200-300kg/giờ</li><li>Tiết kiệm điện năng</li></ul>"
+		},
+		{
+			"id": "2",
+			"title": "Tại Sao Tủ Sấy Thực Phẩm Toàn Phát Là Lựa Chọn Số 1?",
+			"date": "15/11/2025",
+			"desc": "Bạn đang ấp ủ dự án khởi nghiệp với các sản phẩm nông sản sấy khô? Tủ sấy Toàn Phát sẽ là...",
+			"img": "https://images.unsplash.com/photo-1718824331840-399943ff5c1e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NTY2MzF8MHwxfHNlYXJjaHw2fHxtYWNoaW5lfGVufDB8fHx8MTc2MzgwMTY2N3ww&ixlib=rb-4.1.0&q=80&w=1080",
+			"type": "main",
+			"content": "<p>Tủ sấy thực phẩm công nghiệp đang trở thành...</p>"
+		},
+		{
+			"id": "3",
+			"title": "5 Công Thức Tự Phối Trộn Cám Viên Tăng Trọng Nhanh",
+			"img": "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?q=80&w=200&auto=format&fit=crop",
+			"type": "tip",
+			"content": "<p>Chia sẻ 5 công thức phối trộn...</p>"
+		},
+		{
+			"id": "4",
+			"title": "Tận Dụng Phụ Phẩm Nông Nghiệp Làm Thức Ăn Vi Sinh",
+			"img": "https://images.unsplash.com/photo-1728751676767-5393e4141ad7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NTY2MzF8MHwxfHNlYXJjaHwxfHxmcnVpdCUyMHBlZWx8ZW58MHx8fHwxNzYzODAxOTUwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+			"type": "tip",
+			"content": "<p>Hướng dẫn ủ men vi sinh...</p>"
+		},
+		{
+			"id": "5",
+			"title": "Máy ép cám viên tại Huyện Phú Tân",
+			"type": "featured",
+			"content": "<p>Toàn Phát vừa bàn giao máy...</p>"
+		},
+		{
+			"id": "6",
+			"title": "Máy băm chuối tại Huyện Thường Tín",
+			"type": "featured",
+			"content": "<p>Lắp đặt máy băm chuối...</p>"
+		},
+		{
+			"id": "7",
+			"title": "Máy băm chuối tại Huyện Thủ Dầu",
+			"type": "featured",
+			"content": "<p>Toàn Phát vừa bàn giao máy...</p>"
+		},
+		{
+			"id": "8",
+			"title": "Máy băm chuối tại Huyện Thủ Đức",
+			"type": "featured",
+			"content": "<p>Lắp đặt máy băm chuối...</p>"
+		},
+		{
+			"id": "9",
+			"title": "Máy băm chuối tại Huyện Trường Thọ",
+			"type": "featured",
+			"content": "<p>Toàn Phát vừa bàn giao máy...</p>"
+		}
+	],
+	"categories": [
+		{
+			"id": 1,
+			"title": "Máy Băm Chuối",
+			"desc": "Hai chức năng, đa năng 3kW, thái chuối mịn",
+			"img": "/assets/may-bam-chuoi.png",
+			"type": "Máy Băm Chuối",
+			"value": "may-bam-chuoi"
+		},
+		{
+			"id": 2,
+			"title": "Máy Băm Cỏ",
+			"desc": "Hai chức năng, đa năng 3kW, đa chức năng",
+			"img": "/assets/may-bam-co.png",
+			"type": "Máy Băm Cỏ",
+			"value": "may-bam-co"
+		},
+		{
+			"id": 3,
+			"title": "Máy Chăn Nuôi",
+			"desc": "Nghiền thức ăn chăn nuôi B12/ B20",
+			"img": "/assets/may-chan-nuoi.png",
+			"type": "Máy Chăn Nuôi",
+			"value": "may-chan-nuoi"
+		},
+		{
+			"id": 4,
+			"title": "Máy Chế Biến Thực Phẩm",
+			"desc": "Máy nổ bỏng, nghiền bột siêu mịn",
+			"img": "/assets/may-che-bien-thuc-pham.png",
+			"type": "Máy Chế Biến Thực Phẩm",
+			"value": "may-che-bien-thuc-pham"
+		},
+		{
+			"id": 5,
+			"title": "Máy Ép Cám Viên",
+			"desc": "Máy ép cám viên S150/ S160/ S180/ S200/ S250/ S270",
+			"img": "/assets/may-ep-cam-vien.png",
+			"type": "Máy Ép Cám Viên",
+			"value": "may-ep-cam-vien"
+		},
+		{
+			"id": 6,
+			"title": "Máy Nông Nghiệp",
+			"desc": "Máy ép cám viên S150/ S160/ S180/ S200/ S250/ S270",
+			"img": "/assets/may-nong-nghiep.png",
+			"type": "Máy Nông Nghiệp",
+			"value": "may-nong-nghiep"
+		},
+		{
+			"id": 7,
+			"title": "Máy & Công Nghệ Khác",
+			"desc": "Air shower, máy bóc lạc, máy băm gỗ, pass box",
+			"img": "/assets/may-cn-khac.png",
+			"type": "Máy & Công Nghệ Khác",
+			"value": "may-cong-nghe-khac"
+		},
+		{
+			"id": 8,
+			"title": "Thiết Bị Sấy Hấp",
+			"desc": "Máy sấy dân dụng đa năng MS10/ MS30/ MS50",
+			"img": "/assets/thiet-bi-say-hap.png",
+			"type": "Thiết Bị Sấy Hấp",
+			"value": "thiet-bi-say-hap"
+		}
+	],
+	"banners": [
+		{
+			"id": 1,
+			"src": "https://images.unsplash.com/photo-1563201515-adbe35c669c5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NTY2MzF8MHwxfHNlYXJjaHwzN3x8YWdyaWN1bHR1cmV8ZW58MHx8fHwxNzY0ODUyNTAwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+			"alt": "Agricultural Machine Harvesting"
+		},
+		{
+			"id": 2,
+			"src": "https://images.unsplash.com/photo-1601995163669-210ca5381a4a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NTY2MzF8MHwxfHNlYXJjaHwxMzl8fGFncmljdWx0dXJlfGVufDB8fHx8MTc2NDg1MjY3Mnww&ixlib=rb-4.1.0&q=80&w=1080",
+			"alt": "Dây chuyền sản xuất chế biến"
+		},
+		{
+			"id": 3,
+			"src": "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1200&auto=format&fit=crop",
+			"alt": "Công nghệ cơ khí chính xác"
+		}
+	],
+	"locations": [
+		{
+			"id": 1,
+			"name": "Trụ Sở Chính",
+			"companyName": "CÔNG TY CỔ PHẦN CÔNG NGHỆ CƠ KHÍ TOÀN PHÁT",
+			"address": "Số 37 lô 5 – Khu công nghiệp Duyên Thái – Thường Tín – Hà Nội",
+			"mapQuery": "Khu công nghiệp Duyên Thái, Thường Tín, Hà Nội"
+		},
+		{
+			"id": 2,
+			"name": "GBTECH Hà Nội",
+			"companyName": "CÔNG TY CỔ PHẦN SẢN XUẤT VÀ PHÁT TRIỂN CÔNG NGHỆ GB VIỆT NAM",
+			"address": "Nhà B20, TT 301 phố Đội Cấn – Phường Cống Vị – Quận Ba Đình – Hà Nội",
+			"mapQuery": "301 Đội Cấn, Ba Đình, Hà Nội"
+		},
+		{
+			"id": 3,
+			"name": "Văn Phòng Giao Dịch",
+			"companyName": "CÔNG TY CỔ PHẦN SẢN XUẤT VÀ PHÁT TRIỂN CÔNG NGHỆ GB VIỆT NAM",
+			"address": "VP6 Linh Đàm – Thịnh Liệt- Hoàng Mai – Hà Nội",
+			"mapQuery": "VP6 Linh Đàm, Hoàng Mai, Hà Nội"
+		},
+		{
+			"id": 4,
+			"name": "Xưởng Sản Xuất",
+			"companyName": "CÔNG TY CỔ PHẦN SẢN XUẤT VÀ PHÁT TRIỂN CÔNG NGHỆ GB VIỆT NAM",
+			"address": "Xóm 1- Thôn Tương Chúc – Ngũ Hiệp – Thanh Trì – Hà Nội",
+			"mapQuery": "Thôn Tương Chúc, Ngũ Hiệp, Thanh Trì, Hà Nội"
+		}
+	],
+
+	"trust_reasons": [
+		{
+			"id": 1,
+			"title": "ĐỘI NGŨ NHÂN VIÊN CHUYÊN NGHIỆP",
+			"desc": "Đội ngũ tư vấn viên luôn quan tâm tới nhu cầu của khách hàng chu đáo",
+			"icon": "users",
+			"color": "text-blue-600",
+			"bg": "bg-blue-100"
+		},
+		{
+			"id": 2,
+			"title": "PHÂN PHỐI TRÊN TOÀN QUỐC",
+			"desc": "Với mạng lưới phân phối trên toàn quốc, chúng tôi mang đến dịch vụ hỗ trợ tối ưu",
+			"icon": "mapPin",
+			"color": "text-green-600",
+			"bg": "bg-green-100"
+		},
+		{
+			"id": 3,
+			"title": "LIÊN TỤC NÂNG CAO CHẤT LƯỢNG",
+			"desc": "Để thỏa mãn nhu cầu của Quý Khách, chúng tôi liên tục cải tiến và phát triển",
+			"icon": "medal",
+			"color": "text-yellow-600",
+			"bg": "bg-yellow-100"
+		},
+		{
+			"id": 4,
+			"title": "DANH MỤC SẢN PHẨM ĐA DẠNG",
+			"desc": "Công ty của chúng tôi có mọi thứ các bạn cần cho nhu cầu sản xuất",
+			"icon": "package",
+			"color": "text-purple-600",
+			"bg": "bg-purple-100"
+		}
+	]
+}
