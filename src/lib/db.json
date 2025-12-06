@@ -1,4 +1,12 @@
 {
+	"customer": [
+		{
+			"id": "01",
+			"name": "Nguyễn Văn A",
+			"phone": "0123456789"
+		}
+	],
+
 	"products": [
 		{
 			"id": "MBDN",

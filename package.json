@@ -12,7 +12,7 @@
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"format": "prettier --write .",
 		"lint": "prettier --check .",
-		"api": "json-server --watch db.json --port 3001"
+		"api": "json-server --watch src/lib/db.json --port 3001"
 	},
 	"devDependencies": {
 		"@skeletonlabs/skeleton": "^4.4.1",
