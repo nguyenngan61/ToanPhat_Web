@@ -90,31 +90,31 @@
                 <form onsubmit={handleSubmit} class="flex flex-col gap-5"> <div class="relative">
                         <!-- svelte-ignore a11y_label_has_associated_control -->
                         <label class="text-xs text-gray-500 ml-3 bg-gray-50 px-1 absolute -top-2 left-0 z-10">Họ và tên</label>
-                        <input type="text" bind:value={name} required class="w-full border border-gray-300 rounded-md px-4 py-3 text-sm focus:outline-none focus:border-[#0E3A6B] focus:ring-1 focus:ring-[#0E3A6B] bg-transparent relative z-0" />
+                        <input type="text" bind:value={name} required class="w-full border text-black border-gray-300 rounded-md px-4 py-3 text-sm focus:outline-none focus:border-[#0E3A6B] focus:ring-1 focus:ring-[#0E3A6B] bg-transparent relative z-0" />
                     </div>
 
                     <div class="relative">
                         <!-- svelte-ignore a11y_label_has_associated_control -->
                         <label class="text-xs text-gray-500 ml-3 bg-gray-50 px-1 absolute -top-2 left-0 z-10">Email</label>
-                        <input type="email" bind:value={email} required class="w-full border border-gray-300 rounded-md px-4 py-3 text-sm focus:outline-none focus:border-[#0E3A6B] focus:ring-1 focus:ring-[#0E3A6B] bg-transparent relative z-0" />
+                        <input type="email" bind:value={email} required class="w-full border text-black border-gray-300 rounded-md px-4 py-3 text-sm focus:outline-none focus:border-[#0E3A6B] focus:ring-1 focus:ring-[#0E3A6B] bg-transparent relative z-0" />
                     </div>
 
                     <div class="relative">
                         <!-- svelte-ignore a11y_label_has_associated_control -->
                         <label class="text-xs text-gray-500 ml-3 bg-gray-50 px-1 absolute -top-2 left-0 z-10">Số điện thoại</label>
-                        <input type="tel" bind:value={phone} required class="w-full border border-gray-300 rounded-md px-4 py-3 text-sm focus:outline-none focus:border-[#0E3A6B] focus:ring-1 focus:ring-[#0E3A6B] bg-transparent relative z-0" />
+                        <input type="tel" bind:value={phone} required class="w-full border text-black border-gray-300 rounded-md px-4 py-3 text-sm focus:outline-none focus:border-[#0E3A6B] focus:ring-1 focus:ring-[#0E3A6B] bg-transparent relative z-0" />
                     </div>
 
                     <div class="relative">
                         <!-- svelte-ignore a11y_label_has_associated_control -->
                         <label class="text-xs text-gray-500 ml-3 bg-gray-50 px-1 absolute -top-2 left-0 z-10">Tiêu đề</label>
-                        <input type="text" bind:value={subject} required class="w-full border border-gray-300 rounded-md px-4 py-3 text-sm focus:outline-none focus:border-[#0E3A6B] focus:ring-1 focus:ring-[#0E3A6B] bg-transparent relative z-0" />
+                        <input type="text" bind:value={subject} required class="w-full border text-black border-gray-300 rounded-md px-4 py-3 text-sm focus:outline-none focus:border-[#0E3A6B] focus:ring-1 focus:ring-[#0E3A6B] bg-transparent relative z-0" />
                     </div>
 
                     <div class="relative">
                         <!-- svelte-ignore a11y_label_has_associated_control -->
                         <label class="text-xs text-gray-500 ml-3 bg-gray-50 px-1 absolute -top-2 left-0 z-10">Nội dung</label>
-                        <textarea bind:value={message} rows="5" required class="w-full border border-gray-300 rounded-md px-4 py-3 text-sm resize-none focus:outline-none focus:border-[#0E3A6B] focus:ring-1 focus:ring-[#0E3A6B] bg-transparent relative z-0"></textarea>
+                        <textarea bind:value={message} rows="5" required class="w-full border text-black border-gray-300 rounded-md px-4 py-3 text-sm resize-none focus:outline-none focus:border-[#0E3A6B] focus:ring-1 focus:ring-[#0E3A6B] bg-transparent relative z-0"></textarea>
                     </div>
 
                     <button type="submit" class="bg-[#0E3A6B] text-white font-bold px-6 py-3 rounded-md hover:bg-[#0c2e54] transition-colors flex items-center justify-center gap-2 mt-2 group">
