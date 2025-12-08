@@ -25,7 +25,7 @@
     // 2. FETCH DATA FROM API
     onMount(async () => {
         try {
-            const res = await fetch('http://localhost:3001/products');
+            const res = await fetch('/api/products');
             const data = await res.json();
             allProducts = data;
         } catch (error) {

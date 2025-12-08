@@ -19,7 +19,7 @@
 
         try {
             // POST request to save message
-            const res = await fetch('http://localhost:3001/messages', {
+            const res = await fetch('/api/messages', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(messageData)

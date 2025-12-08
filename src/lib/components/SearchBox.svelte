@@ -25,7 +25,7 @@
         try {
             // JSON Server supports partial search with 'q='
             // Example: GET /products?q=chuối
-            const res = await fetch(`http://localhost:3001/products?q=${encodeURIComponent(query)}`);
+            const res = await fetch(`/api/products?q=${encodeURIComponent(query)}`);
             const data = await res.json();
             
             // Limit to top 5 suggestions to keep dropdown clean

@@ -5,7 +5,7 @@ let categories = $state<any[]>([]);
 
 onMount(async () => {
         try {
-            const res = await fetch('http://localhost:3001/categories');
+            const res = await fetch('/api/categories');
             categories = await res.json();
         } catch (error) {
             console.error("Error loading categories:", error);

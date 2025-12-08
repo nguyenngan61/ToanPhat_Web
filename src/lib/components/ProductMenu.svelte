@@ -10,7 +10,7 @@
     // 2. FETCH: Get categories from API
     onMount(async () => {
         try {
-            const res = await fetch('http://localhost:3001/categories');
+            const res = await fetch('/api/categories');
             if (res.ok) {
                 productCategories = await res.json();
             }

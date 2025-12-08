@@ -9,7 +9,7 @@
     // 2. FETCH DATA
     onMount(async () => {
         try {
-            const res = await fetch('http://localhost:3001/locations');
+            const res = await fetch('/api/locations');
             locations = await res.json();
         } catch (error) {
             console.error("Error loading locations:", error);

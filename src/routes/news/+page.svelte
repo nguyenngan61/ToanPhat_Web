@@ -11,7 +11,7 @@
     // 2. FETCH
     onMount(async () => {
         try {
-            const res = await fetch('http://localhost:3001/news');
+            const res = await fetch('/api/news');
             const data = await res.json(); // Fixed: added await
 
             // Filter data

@@ -22,7 +22,7 @@
         // B. FETCH LOGIC (Async - Wrapped in a separate function)
         const loadData = async () => {
             try {
-                const res = await fetch('http://localhost:3001/products');
+                const res = await fetch('/api/products');
                 const data = await res.json();
                 // Filter for items with discount > 0
                 flashSaleProducts = data.filter((p: any) => p.discount && p.discount > 0);

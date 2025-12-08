@@ -9,7 +9,7 @@
     onMount(async () => {
         try {
             // Use the same 'locations' endpoint we used for the Home Page map
-            const res = await fetch('http://localhost:3001/locations');
+            const res = await fetch('/api/locations');
             if (res.ok) {
                 locations = await res.json();
             }

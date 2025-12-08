@@ -12,7 +12,7 @@
 		if (selectedIds.includes(id)) {
 			selectedIds = selectedIds.filter(i => i !== id);
 		} else {
-			selectedIds.push(id);
+			selectedIds = [...selectedIds, id];
 		}
 	}
 
@@ -22,17 +22,21 @@
 	}
 
     // 2. ADD CHECKOUT FUNCTION
-    function proceedToCheckout() {
-        // Filter only the items that are checked
-        const itemsToBuy = cart.items.filter(item => selectedIds.includes(item.id));
-        
-        if (itemsToBuy.length > 0) {
-            checkout.setItems(itemsToBuy); // Save to store
-            goto('/checkout'); // Go to page
-        } else {
-            alert("Vui lòng chọn ít nhất 1 sản phẩm để thanh toán.");
-        }
+    function handleCheckout() {
+    // 1. Filter: Get only the items the user selected
+    const itemsToCheckout = cart.items.filter(item => selectedIds.includes(item.id));
+
+    if (itemsToCheckout.length === 0) {
+        alert("Vui lòng chọn ít nhất một sản phẩm để thanh toán!");
+        return;
     }
+
+    // 2. Bridge: Save them to the "Instant" storage (Same as Buy Now)
+    localStorage.setItem('checkout_instant', JSON.stringify(itemsToCheckout));
+
+    // 3. Navigate: Tell Checkout page to look at the bridge (?type=instant)
+    goto('/checkout?type=instant');
+}
 
 	let finalTotal = $derived(
 		cart.items
@@ -114,7 +118,7 @@
 				</div>
 
                 <button 
-                    onclick={proceedToCheckout}
+                    onclick={handleCheckout}
                     class="bg-[#004A8F] text-white font-bold px-10 py-3 rounded hover:brightness-110 transition-all shadow-md uppercase text-sm"
                 >
 					Thanh Toán

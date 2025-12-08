@@ -12,7 +12,7 @@
 	onMount(() => {
         const loadBanners = async () => {
             try {
-                const res = await fetch('http://localhost:3001/banners');
+                const res = await fetch('/api/banners');
                 if (res.ok) {
                     images = await res.json();
                 }

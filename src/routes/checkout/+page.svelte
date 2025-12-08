@@ -1,22 +1,15 @@
 <script lang="ts">
-	import { checkout } from '$lib/stores/checkout.svelte';
-	import { cart } from '$lib/stores/cart.svelte';
-	import { ChevronLeft, CreditCard, Banknote, ChevronDown, Tag } from '@lucide/svelte';
-	import { onMount } from 'svelte';
+    import { page } from '$app/stores'; 
+    import { checkout } from '$lib/stores/checkout.svelte'; 
+    import { cart } from '$lib/stores/cart.svelte';
+    import { ArrowLeft, ChevronLeft, ChevronDown, MapPin, Phone, User, CreditCard, Truck, CheckCircle, Banknote } from '@lucide/svelte';
+    import { onMount } from 'svelte';
     import { goto } from '$app/navigation';
 
-    // ... (Location Data & State variables remain the same) ...
+    // --- 1. SETUP & DATA ---
     const locationData: Record<string, any> = {
-        "Hà Nội": {
-            "Quận Ba Đình": ["Phường Cống Vị", "Phường Liễu Giai", "Phường Kim Mã"],
-            "Huyện Thường Tín": ["Xã Duyên Thái", "Xã Vạn Điểm", "Xã Hà Hồi"],
-            "Quận Hoàng Mai": ["Phường Đại Kim", "Phường Định Công", "Phường Thịnh Liệt"]
-        },
-        "Hồ Chí Minh": {
-            "Quận 1": ["Phường Bến Nghé", "Phường Bến Thành", "Phường Đa Kao"],
-            "Quận 7": ["Phường Tân Phong", "Phường Tân Phú", "Phường Bình Thuận"],
-            "Thành phố Thủ Đức": ["Phường Thảo Điền", "Phường An Phú", "Phường Hiệp Bình Chánh"]
-        }
+        "Hà Nội": { "Quận Ba Đình": ["Phường Cống Vị", "Phường Liễu Giai"], "Huyện Thường Tín": ["Xã Duyên Thái", "Xã Vạn Điểm"] },
+        "Hồ Chí Minh": { "Quận 1": ["Phường Bến Nghé", "Phường Bến Thành"], "Quận 7": ["Phường Tân Phong", "Phường Tân Phú"] }
     };
 
     let name = $state('');
@@ -33,71 +26,104 @@
     let activeCoupon = $state('');
     let showCouponList = $state(false);
 
+    // --- 2. STRICT LOGIC (THE NEW ENGINE) ---
+    let finalItems = $state<any[]>([]); 
+    let isInstantMode = $state(false);
+    let isLoading = $state(true);
+
+    onMount(() => {
+        const urlType = $page.url.searchParams.get('type');
+        console.log("COMMAND RECEIVED:", urlType);
+
+        if (urlType === 'instant') {
+            // === PATH A: BUY NOW ===
+            isInstantMode = true;
+            const rawData = localStorage.getItem('checkout_instant');
+            
+            if (rawData) {
+                finalItems = JSON.parse(rawData);
+            } else {
+                alert("Lỗi dữ liệu: Không tìm thấy sản phẩm mua ngay.");
+                goto('/');
+                return;
+            }
+        } else {
+            // === PATH B: CART ===
+            isInstantMode = false;
+            finalItems = cart.items || [];
+        }
+
+        if (finalItems.length === 0) {
+            goto('/cart');
+        }
+        isLoading = false;
+    });
+
+    // --- 3. CALCULATIONS ---
+    let subTotal = $derived(finalItems.reduce((sum, item) => sum + (item.price * item.quantity), 0));
+    let discountAmount = $derived(Math.round(subTotal * (appliedDiscount / 100)));
+    let finalTotal = $derived(subTotal + shippingFee - discountAmount);
+
     let districts = $derived(selectedCity ? Object.keys(locationData[selectedCity] || {}) : []);
     let wards = $derived(selectedDistrict && selectedCity ? locationData[selectedCity][selectedDistrict] || [] : []);
 
     const coupons = [
-        { code: 'SUPER10', discountPercent: 10, label: 'Giảm 10% cho đơn từ 1tr', condition: 'Đơn hàng tối thiểu 1.000.000đ', isBest: true },
-        { code: 'HELLO05', discountPercent: 5, label: 'Giảm 5% cho khách mới', condition: 'Dành cho khách hàng lần đầu mua sắm', isBest: false },
-        { code: 'FREESHIP', discountPercent: 2, label: 'Giảm 2% phí vận chuyển', condition: 'Áp dụng cho mọi đơn hàng', isBest: false }
+        { code: 'SUPER10', discountPercent: 10, label: 'Giảm 10%', condition: '> 1tr', isBest: true },
+        { code: 'FREESHIP', discountPercent: 2, label: 'Freeship', condition: 'Mọi đơn', isBest: false }
     ];
 
-    let subTotal = $derived(checkout.items.reduce((sum, item) => sum + (item.price * item.quantity), 0));
-    let discountAmount = $derived(Math.round(subTotal * (appliedDiscount / 100)));
-    let finalTotal = $derived(subTotal + shippingFee - discountAmount);
-
+    // Helpers
     function handleCityChange() { selectedDistrict = ""; selectedWard = ""; }
     function handleDistrictChange() { selectedWard = ""; }
     function selectCoupon(c: any) { couponCode = c.code; appliedDiscount = c.discountPercent; activeCoupon = c.code; showCouponList = false; }
-    const formatPrice = (price: number) => { return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price); };
+    
+    // Updated Format Price (Handles 0 => Liên hệ)
+    const formatPrice = (price: number) => { 
+        if (!price || price === 0) return "Liên hệ";
+        return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price); 
+    };
 
-    // === UPDATED PLACE ORDER FUNCTION (API CONNECTED) ===
+    // --- 4. SUBMIT ORDER ---
     async function placeOrder() {
-        if (!name.trim() || !phone.trim() || !selectedCity || !selectedDistrict || !selectedWard) {
-            alert("Vui lòng điền đầy đủ: Họ tên, Số điện thoại, Tỉnh/Thành, Quận/Huyện, Phường/Xã.");
+        if (!name.trim() || !phone.trim() || !selectedCity) {
+            alert("Vui lòng điền đầy đủ thông tin giao hàng!");
             return;
         }
-
         const fullAddress = `${selectedWard}, ${selectedDistrict}, ${selectedCity}`;
 
-        // 1. Save to Local Store (for immediate display on Success Page)
-        checkout.updateInfo({
-            name, phone, address: fullAddress, note: note, paymentMethod,
-            shippingFee, discountPercent: appliedDiscount, couponCode: activeCoupon
-        });
+        checkout.updateInfo({ name, phone, address: fullAddress, note, paymentMethod, shippingFee, discountPercent: appliedDiscount, couponCode: activeCoupon });
 
-        // 2. Prepare Data Payload for API
         const newOrder = {
-            id: Date.now().toString(), // Simple unique ID
+            id: Date.now().toString(),
             date: new Date().toISOString(),
             customer: { name, phone, address: fullAddress, note },
-            items: checkout.items,
+            items: finalItems,
             payment: { method: paymentMethod, shippingFee, discount: discountAmount, total: finalTotal },
             status: "Pending"
         };
 
         try {
-            // 3. Send POST Request to JSON Server
-            const response = await fetch('http://localhost:3001/orders', {
+            const response = await fetch('/api/orders', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(newOrder)
             });
 
             if (response.ok) {
-                // 4. Clean up Cart & Navigate
-                cart.removePurchasedItems(checkout.items);
+                if (isInstantMode) {
+                    localStorage.removeItem('checkout_instant'); 
+                } else {
+                    cart.removePurchasedItems(finalItems);
+                }
                 goto('/success');
             } else {
-                alert("Lỗi khi tạo đơn hàng. Vui lòng thử lại.");
+                alert("Lỗi khi tạo đơn hàng.");
             }
         } catch (error) {
-            console.error("Order Error:", error);
-            alert("Không thể kết nối đến máy chủ.");
+            console.error(error);
+            alert("Lỗi kết nối.");
         }
     }
-
-    onMount(() => { if (checkout.items.length === 0) goto('/cart'); });
 </script>
 
 <!-- svelte-ignore a11y_click_events_have_key_events -->
@@ -110,14 +136,19 @@
             <div class="flex flex-col gap-5">
                 <!-- svelte-ignore a11y_label_has_associated_control -->
                 <div class="relative"><label class="text-xs text-gray-500 ml-3 bg-white px-1 absolute -top-2 left-0 z-10">Họ và tên <span class="text-red-500">*</span></label><input type="text" bind:value={name} class="w-full text-black border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:border-[#0E3A6B] bg-transparent relative z-0" placeholder="" /></div>
+                
                 <!-- svelte-ignore a11y_label_has_associated_control -->
                 <div class="relative flex"><label class="text-xs text-gray-500 ml-3 bg-white px-1 absolute -top-2 left-0 z-10">Số điện thoại <span class="text-red-500">*</span></label><div class="w-16 border text-black border-gray-300 border-r-0 rounded-l-md flex items-center justify-center bg-gray-50"><img src="https://flagcdn.com/w20/vn.png" alt="VN" class="w-5" /></div><input type="text" bind:value={phone} class="w-full text-black border border-gray-300 rounded-r-md px-4 py-3 focus:outline-none focus:border-[#0E3A6B] relative z-0" placeholder="" /></div>
+                
                 <!-- svelte-ignore a11y_label_has_associated_control -->
                 <div class="relative"><label class="text-xs text-gray-500 ml-3 bg-white px-1 absolute -top-2 left-0 z-10">Tỉnh thành <span class="text-red-500">*</span></label><div class="relative"><select bind:value={selectedCity} onchange={handleCityChange} class="w-full border text-black border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:border-[#0E3A6B] bg-white appearance-none relative z-0"><option value="" disabled selected>Chọn Tỉnh/Thành</option>{#each Object.keys(locationData) as city}<option value={city}>{city}</option>{/each}</select><ChevronDown class="absolute right-4 top-1/2 -translate-y-1/2 size-4 text-gray-400 pointer-events-none z-10" /></div></div>
+                
                 <!-- svelte-ignore a11y_label_has_associated_control -->
                 <div class="relative"><label class="text-xs text-gray-500 ml-3 bg-white px-1 absolute -top-2 left-0 z-10">Quận huyện <span class="text-red-500">*</span></label><div class="relative"><select bind:value={selectedDistrict} onchange={handleDistrictChange} disabled={!selectedCity} class="w-full text-black border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:border-[#0E3A6B] bg-white appearance-none disabled:bg-gray-100 relative z-0"><option value="" disabled selected>Chọn Quận/Huyện</option>{#each districts as dist}<option value={dist}>{dist}</option>{/each}</select><ChevronDown class="absolute right-4 top-1/2 -translate-y-1/2 size-4 text-gray-400 pointer-events-none z-10" /></div></div>
+                
                 <!-- svelte-ignore a11y_label_has_associated_control -->
                 <div class="relative"><label class="text-xs text-gray-500 ml-3 bg-white px-1 absolute -top-2 left-0 z-10">Phường xã <span class="text-red-500">*</span></label><div class="relative"><select bind:value={selectedWard} disabled={!selectedDistrict} class="w-full border text-black border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:border-[#0E3A6B] bg-white appearance-none disabled:bg-gray-100 relative z-0"><option value="" disabled selected>Chọn Phường/Xã</option>{#each wards as ward}<option value={ward}>{ward}</option>{/each}</select><ChevronDown class="absolute right-4 top-1/2 -translate-y-1/2 size-4 text-gray-400 pointer-events-none z-10" /></div></div>
+                
                 <!-- svelte-ignore a11y_label_has_associated_control -->
                 <div class="relative"><label class="text-xs text-gray-500 ml-3 bg-white px-1 absolute -top-2 left-0 z-10">Ghi chú (Tùy chọn)</label><textarea bind:value={note} class="w-full border text-black border-gray-300 rounded-md px-4 py-3 h-24 resize-none focus:outline-none focus:border-[#0E3A6B] relative z-0"></textarea></div>
             </div>
@@ -141,20 +172,18 @@
         </div>
 
         <div class="lg:col-span-4">
-            <h2 class="text-[#0E3A6B] font-bold text-lg uppercase mb-4">Đơn hàng ({checkout.items.length} sản phẩm)</h2>
+            <h2 class="text-[#0E3A6B] font-bold text-lg uppercase mb-4">Đơn hàng ({finalItems.length} sản phẩm)</h2>
             <div class="border border-gray-200 rounded-md p-4 bg-white shadow-sm relative z-0">
                 <div class="flex flex-col gap-4 border-b border-gray-200 pb-4 max-h-[300px] overflow-y-auto custom-scrollbar relative z-0">
-                    {#each checkout.items as item}
+                    {#each finalItems as item}
                         <div class="flex justify-between items-start gap-3">
-                            <div class="relative shrink-0"><div class="w-14 h-14 border border-gray-200 rounded bg-white overflow-hidden"><img src={item.images ? item.images[0] : item.img} alt={item.name} class="w-full h-full object-contain" /></div></div>
+                            <div class="relative shrink-0"><div class="w-14 h-14 border border-gray-200 rounded bg-white overflow-hidden"><img src={item.images ? item.images[0] : (item.img || item.image)} alt={item.name} class="w-full h-full object-contain" /></div></div>
                             <div class="flex-1"><h4 class="text-sm text-gray-700 leading-tight line-clamp-2 font-medium">{item.name}</h4><div class="flex justify-between items-center mt-1 text-xs"><span class="text-gray-400">Toàn Phát</span><span class="text-gray-600"><span class="font-bold text-[#0E3A6B]">{item.quantity}</span> x {formatPrice(item.price)}</span></div></div>
                             <div class="text-sm font-bold text-gray-700">{formatPrice(item.price * item.quantity)}</div>
                         </div>
                     {/each}
                 </div>
                 <div class="py-4 border-b border-gray-200 relative z-50">
-                    <!-- svelte-ignore a11y_no_static_element_interactions -->
-                    <!-- svelte-ignore a11y_click_events_have_key_events -->
                     <div class="relative" onclick={(e) => e.stopPropagation()}>
                         <div class="flex gap-2">
                             <input type="text" bind:value={couponCode} placeholder="Chọn hoặc nhập mã giảm giá" readonly onclick={() => showCouponList = !showCouponList} class="flex-1 border border-gray-300 rounded px-3 py-2 text-sm focus:border-[#0E3A6B] focus:outline-none cursor-pointer bg-white text-[#0E3A6B] font-bold placeholder:font-normal placeholder:text-gray-400" />
@@ -163,8 +192,6 @@
                         {#if showCouponList}
                             <div class="absolute top-full left-0 w-full mt-1 bg-white border border-gray-200 rounded-md shadow-xl z-50 max-h-[300px] overflow-y-auto">
                                 {#each coupons as c}
-                                    <!-- svelte-ignore a11y_no_static_element_interactions -->
-                                    <!-- svelte-ignore a11y_click_events_have_key_events -->
                                     <div onclick={() => selectCoupon(c)} class="p-3 border-b border-gray-100 hover:bg-blue-50 cursor-pointer flex justify-between items-start group">
                                         <div class="flex flex-col gap-1"><div class="flex items-center gap-2"><span class="font-bold text-[#0E3A6B]">{c.code}</span>{#if c.isBest}<span class="bg-yellow-400 text-[8px] text-black px-1 rounded font-bold">BEST CHOICE</span>{/if}</div><span class="text-xs font-bold text-gray-700">{c.label}</span><span class="text-[10px] text-gray-500">{c.condition}</span></div><div class="text-xs font-bold text-green-600 group-hover:underline">Áp dụng</div>
                                     </div>

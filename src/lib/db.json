@@ -1,17 +1,9 @@
 {
-	"customer": [
-		{
-			"id": "01",
-			"name": "Nguyễn Văn A",
-			"phone": "0123456789"
-		}
-	],
-
 	"products": [
 		{
 			"id": "MBDN",
 			"name": "Máy băm chuối đa năng 3kw Toàn Phát",
-			"price": 1550000,
+			"price": 600000,
 			"oldPrice": 1000000,
 			"discount": 40,
 			"sold": 4,

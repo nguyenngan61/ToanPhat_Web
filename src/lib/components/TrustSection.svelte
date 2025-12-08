@@ -25,7 +25,7 @@
     // 4. FETCH DATA
     onMount(async () => {
         try {
-            const res = await fetch('http://localhost:3001/trust_reasons');
+            const res = await fetch('/api/trust_reasons');
             if (res.ok) {
                 trust_reasons = await res.json();
             }
